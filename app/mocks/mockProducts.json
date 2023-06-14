@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Americano",
+      "src": "https://www.starbucks.co.th/stb-media/2020/08/40.Iced-Caffe-Americano1080-600x600.png",
+      "price": 115
+    },
+    {
+      "id": 2,
+      "name": "Latte",
+      "src": "https://www.starbucks.co.th/stb-media/2020/08/42.ICED-LATTE1080-600x600.png",
+      "price": 125
+    },
+    {
+      "id": 3,
+      "name": "Mocha",
+      "src": "https://www.starbucks.co.th/stb-media/2020/08/41.Iced-Caffe-Mocha1080-600x600.png",
+      "price": 140
+    },
+    {
+      "id": 4,
+      "name": "Yuzu Cold Brew",
+      "src": "https://www.starbucks.co.th/stb-media/2022/01/Yuzu-Cold-Brew-1080x1080-1-600x600.png",
+      "price": 145
+    },
+    {
+      "id": 5,
+      "name": "Iced White Chocolate Mocha",
+      "src": "https://www.starbucks.co.th/stb-media/2020/08/46.Iced-White-Chocolate-Mocha1080-600x600.png",
+      "price": 150
+    },
+    {
+      "id": 6,
+      "name": "Cold Foam Iced Espresso",
+      "src": "https://www.starbucks.co.th/stb-media/2020/08/47.Cold-Foam-Iced-Espresso1080-600x600.png",
+      "price": 140
+    }
+  ]
+}
