@@ -24,5 +24,5 @@ export default function RootLayout({
 }
 
 const RootLayoutTwClass = {
-  body: `bg-base-100`,
+  body: `bg-base-100 h-[100svh]`,
 }

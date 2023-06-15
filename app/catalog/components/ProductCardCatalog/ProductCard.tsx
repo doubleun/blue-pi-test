@@ -10,24 +10,24 @@ function ProductCard({ product }: ProductCardProps) {
   if (!product) return
   return (
     // shadow-xl ??
-    <div className="card w-64 bg-base-100 cursor-pointer group hover:bg-transparent/5 mx-auto">
+    <section className="card w-64 xl:w-full bg-base-100 cursor-pointer group hover:bg-transparent/5 mx-auto">
       <figure className="rounded-2xl">
         <Image
           src={product.src}
           alt={product.name}
-          width={400}
-          height={400}
-          className="object-none group-hover:scale-105 transition-transform duration-300"
+          width={600}
+          height={600}
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
         />
       </figure>
 
       {/* card body */}
       <div className="card-body bg-transparent">
         <h2 className="card-title">
-          Shoes!
+          {product.name}
           <div className="badge badge-secondary">NEW</div>
         </h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
+        <p>{product.descriptions}</p>
 
         {/* card badges */}
         <div className="card-actions justify-end">
@@ -40,7 +40,7 @@ function ProductCard({ product }: ProductCardProps) {
           <p>{product.price} Baht</p>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 
