@@ -1,15 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
-import { CatalogOption } from '@constants'
+import { ProductCategory } from '@constants'
 import clsx from 'clsx'
 
 /**
  * Map catalog menu items. To add more add menu to the constant file.
- * @param id - value of the CatalogOption enum. For setting active in the UI
+ * @param id - value of the ProductCategory enum. For setting active in the UI
  * @todo move to helper file if more logic is needed
  */
-const mapMenuItems = (id: CatalogOption) => {
-  return Object.values<string>(CatalogOption).map((option) => (
+const mapMenuItems = (id: ProductCategory) => {
+  return Object.values<string>(ProductCategory).map((option) => (
     <li key={option}>
       <Link
         href={`/catalog/${option}`}
@@ -25,7 +25,7 @@ const mapMenuItems = (id: CatalogOption) => {
   ))
 }
 
-function CatalogNavbar({ id }: { id: CatalogOption }) {
+function CatalogNavbar({ id }: { id: ProductCategory }) {
   return (
     <section className="navbar justify-center my-4">
       <ul className="menu menu-horizontal gap-2 sm:gap-3 md:gap-6">

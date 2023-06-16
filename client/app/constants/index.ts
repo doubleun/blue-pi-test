@@ -1,6 +1,6 @@
 // can expand if needed
-export enum CatalogOption {
+export enum ProductCategory {
   COFFEE = 'coffee',
   TEA = 'tea',
-  SODA = 'soda',
+  'NON-COFFEE' = 'non-coffee',
 }

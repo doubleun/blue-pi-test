@@ -1,7 +1,7 @@
-import { CatalogOption } from '@constants'
+import { ProductCategory } from '@constants'
 import { CatalogNavbar, ProductCardCatalog } from '@catalog/components'
 
-function CatalogPage({ params }: { params: { id: CatalogOption } }) {
+function CatalogPage({ params }: { params: { id: ProductCategory } }) {
   return (
     <main>
       <CatalogNavbar id={params.id} />
