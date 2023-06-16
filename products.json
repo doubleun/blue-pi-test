@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Americano",
+    "descriptions": "some desc",
+    "imageSrc": "src",
+    "price": 110,
+    "stock": 10
+  },
+  {
+    "name": "Latte",
+    "descriptions": "latte desc",
+    "imageSrc": "latte src",
+    "price": 120,
+    "stock": 8
+  }
+]

@@ -1,34 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### HOW TO SETUP (Local)
 
-## Getting Started
+1. Install `pnpm`
+2. Install client dependencies `pnpm --filter client install`
+3. Install server api dependencies `pnpm --filter api install`
+4. Run client `pnpm --filter client dev`
+5. Run the server api `pnpm --filter api dev`
 
-First, run the development server:
+#### SETUP MONGODB
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+**OPTION 1 (Recommend):**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. run `docker-compose up -d` in the root project the database will be initiate using default data
+2. connect using `mongosh --host localhost --port 27017 --authenticationDatabase admin -u root -p password`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**OPTION 2:** NO DEFAULT DATA
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+In `api` workspace setup the `.env` for `MONGO_URI` If you want to run locally via Docker follow these steps:
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. run `docker pull mongo`
+2. run `docker network create mongo-network` (if you want to connect mongo to the network along with other containers)
+3. run `docker run -d --name mongodb --network mongo-network -p 27017:27017 mongo` (skip the `--network mongo-network` if network is not needed)
+4. connect app via `mongodb://localhost:27017/blue-pi-vending` (change "blue-pi-vending" to the correct collection name)
+5. connect shell using `mongosh` run `mongosh --host localhost --port 27017`
