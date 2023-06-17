@@ -46,7 +46,7 @@ export const getProductsByCategory = async (req: Request, res: Response) => {
 export const getProductById = async (req: Request, res: Response) => {
   const { id } = req.params
   try {
-    const product = await Product.find({ id })
+    const product = await Product.findOne({ id })
     res.json(product)
   } catch (err) {
     console.error(err)

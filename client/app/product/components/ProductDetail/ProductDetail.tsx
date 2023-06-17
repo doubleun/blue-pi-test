@@ -11,6 +11,7 @@ async function ProductDetail({ id }: { id: string }) {
   // const data = useSWR('/products', getproducts)
   const product = await getProductById(id)
 
+  console.log('test prod detail: ', product)
   // TODO:maybe throw an error
   if (!product) {
     console.error('Product not found')
