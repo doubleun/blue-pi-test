@@ -1,11 +1,11 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductImage from './ProductImage'
 import Image from 'next/image'
 import { calculateCheckoutPrice } from './ProductDetail.helper'
 import useSWR from 'swr'
-import { ProductsAPIEndpoints, getProductById, request } from '@services'
+import { ProductsAPIEndpoints, getProductById } from '@services'
 import { useRouter } from 'next/navigation'
 
 function ProductDetail({ id }: { id: string }) {
@@ -18,19 +18,42 @@ function ProductDetail({ id }: { id: string }) {
     return getProductById(id)
   })
   const router = useRouter()
+  const [checkoutPrice, setCheckoutPrice] = useState(product?.price)
+  const [additional, setAdditional] = useState<{
+    coffeeShot: number
+    bubble: number
+  }>({ coffeeShot: 0, bubble: 0 })
+
+  useEffect(() => {
+    if (product) {
+      // consider using `useTransition` to potentially reduce the re-render
+      setCheckoutPrice(
+        calculateCheckoutPrice(product, Object.values(additional))
+      )
+    }
+  }, [additional, product])
+
+  useEffect(() => {
+    console.log('render')
+  })
+
+  // TODO: make a proper loading component
+  if (isLoading) {
+    return <h2>Loading . . .</h2>
+  }
 
   // TODO:maybe throw an error
-  if (!product) {
-    console.error('Product not found')
+  if (!product || error) {
+    console.error('An error has occurred while trying to fetch the product')
     return
   }
   return (
     <section className="container h-full relative m-auto px-2 md:px-0 py-6">
-      {/* TODO: can add product navbar */}
+      {/* TODO: can add product navbar ? */}
       <ProductImage product={product} />
 
       {/* product body */}
-      <div className="w-full mt-8 px-6 py-4 rounded-lg bg-white">
+      <div className="w-full mt-8 px-6 py-2 rounded-lg bg-white">
         <div className="prose">
           <h3>Additional</h3>
         </div>
@@ -47,7 +70,40 @@ function ProductDetail({ id }: { id: string }) {
           <div className="prose flex-1">
             <h4>Extra shot (+15)</h4>
           </div>
-          <input type="checkbox" className="checkbox checkbox-lg" />
+          <input
+            type="checkbox"
+            className="checkbox checkbox-lg"
+            onChange={(e) =>
+              setAdditional((prev) => ({
+                ...prev,
+                ['coffeeShot']: e.target.checked ? 15 : 0,
+              }))
+            }
+          />
+        </div>
+
+        <div className="flex items-center gap-4 my-2">
+          <figure className="bg-zinc-200 p-1 rounded-md">
+            <Image
+              src="/bubble-tea.png"
+              alt="bubble tea"
+              width={30}
+              height={30}
+            />
+          </figure>
+          <div className="prose flex-1">
+            <h4>Tapioca Pearls (+5)</h4>
+          </div>
+          <input
+            type="checkbox"
+            className="checkbox checkbox-lg"
+            onChange={(e) =>
+              setAdditional((prev) => ({
+                ...prev,
+                ['bubble']: e.target.checked ? 5 : 0,
+              }))
+            }
+          />
         </div>
       </div>
 
@@ -60,13 +116,11 @@ function ProductDetail({ id }: { id: string }) {
           <h4 className="text-amber-800">Go Back</h4>
         </div>
       </button>
+
       <button className="btn btn-primary absolute bottom-6 right-0 mx-2 md:mx-0">
         <div className="prose flex">
           <h4 className="border-r-2 border-slate-900 pr-4">Buy now</h4>
-          {/* TODO: remove cal addons mock */}
-          <h4 className="pl-4">{`${calculateCheckoutPrice(product, [
-            15,
-          ])} Baht`}</h4>
+          <h4 className="pl-4" id="checkoutPrice">{`${checkoutPrice} Baht`}</h4>
         </div>
       </button>
     </section>
