@@ -10,10 +10,9 @@ function ChangeDetail({ changeStack }: { changeStack: ChangeStack }) {
     (a, b) => a.value - b.value
   )
 
-  // TODO: throw error ?
+  // TODO: throw error
   if (changeStackValues.length < 1) return
 
-  console.log('changeStackValues: ', changeStackValues)
   return (
     <div className="w-full mt-4">
       {changeStackValues.map((change) => (

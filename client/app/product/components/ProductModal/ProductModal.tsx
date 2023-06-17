@@ -238,7 +238,7 @@ function ProductModal({
                   setDeductedCheckoutPrice(checkoutPrice)
                   setPaymentStack([])
                   setDisplayErrorMessage('')
-                  router.push('/catalog/coffee')
+                  router.push(`/catalog/${ProductCategory.COFFEE}`)
                 }
               }}
             >
