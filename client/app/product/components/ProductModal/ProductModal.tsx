@@ -9,11 +9,12 @@ import {
 import { ICash, getCashes } from '@services/cashes'
 import clsx from 'clsx'
 import React, { Dispatch, useCallback, useEffect, useState } from 'react'
-import useSWR, { KeyedMutator, mutate } from 'swr'
+import useSWR, { KeyedMutator } from 'swr'
 import CashOption from '../CashOption/CashOption'
 import { calculateAddonPrice } from '../ProductDetail/ProductDetail.helper'
-import { ChangeStack, calculateChange } from './ProductModal.helper'
+import { calculateChange } from './ProductModal.helper'
 import { useRouter } from 'next/navigation'
+import ChangeDetail, { ChangeStack } from './ChangeDetail'
 
 interface PopupModalProps {
   open: boolean
@@ -188,17 +189,19 @@ function ProductModal({
     return (
       <>
         <div className="w-full flex flex-col items-center py-10">
-          <h3 className="font-bold text-2xl">
+          <h3 className="font-bold text-xl md:text-2xl">
             {availableChangeStack
               ? 'Please pickup the change'
               : 'Enjoy your drink !'}
           </h3>
 
+          {/* TODO: display change stack detail here */}
+          <ChangeDetail changeStack={changeStack} />
+
           {/* actions */}
           <div className="modal-action justify-center">
-            {/* if there is a button in form, it will close the modal */}
             <button
-              className="btn btn-secondary"
+              className="btn btn-primary"
               onClick={() => {
                 if (availableChangeStack) {
                   // case: there's change stack from calculate change. the confirm will open success and clear the change stack

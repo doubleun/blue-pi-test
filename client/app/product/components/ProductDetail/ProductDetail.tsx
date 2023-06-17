@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation'
 import ProductModal from '../ProductModal/ProductModal'
 
 function ProductDetail({ id }: { id: string }) {
-  // TOOD: make new hook for this
+  // TODO: turn this into a hook
   const {
     isLoading,
     error,

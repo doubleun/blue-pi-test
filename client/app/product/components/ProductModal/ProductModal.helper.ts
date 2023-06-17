@@ -1,6 +1,7 @@
 import { ICash } from '@services/cashes'
 import updateCashes from '@services/cashes/updateCashes'
 import { KeyedMutator } from 'swr'
+import { ChangeStack } from './ChangeDetail'
 
 /**
  * @param paymentStack - cashes from customer
@@ -10,10 +11,6 @@ export const calculateCashesStock = (
   paymentStack: ICash[],
   stockCashes: ICash[]
 ) => {}
-
-export type ChangeStack = {
-  [key: ICash['id']]: Pick<ICash, 'amount' | 'value' | 'type'>
-}
 
 /**
  * @param change - changes from the checkout price (checkout price - total customer paid) basically a `deductedCheckoutPrice`
