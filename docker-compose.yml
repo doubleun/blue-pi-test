@@ -15,18 +15,34 @@ services:
   #     - ./mongo-init/:/docker-entrypoint-initdb.d/:ro
 
   api:
-    build: .
+    build:
+      context: ./api
+      dockerfile: Dockerfile
     ports:
       - 3003:3003
     volumes:
-      - .:/app
+      - ./api:/api
     environment:
       - PORT=3003
       - MONGO_URI=mongodb://mongodb:27017/blue-pi-vending
-    # depends_on:
-    #   - mongodb
-    # networks:
-    #   - vending-network
-# networks:
-#   vending-network:
-#     driver: bridge
+    depends_on:
+      - mongodb
+    networks:
+      - vending-network
+
+  # client:
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 3000:3000
+  #   volumes:
+  #     - ./client:/client
+  # environment:
+  #   - name=value
+  # networks:
+  #   - vending-network
+
+networks:
+  vending-network:
+    driver: bridge
