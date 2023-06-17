@@ -9,7 +9,8 @@
     "dev": "concurrently \"pnpm -F api dev\" \"pnpm -F client dev\"",
     "dev:api": "pnpm -F api dev",
     "dev:client": "pnpm -F api client",
-    "start": "concurrently \"pnpm -F api start\" \"pnpm -F client start\""
+    "start": "concurrently \"pnpm -F api start\" \"pnpm -F client start\"",
+    "deploy:api": "pnpm -F api deploy ./api/.deploy"
   },
   "keywords": [],
   "author": "",

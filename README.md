@@ -1,7 +1,8 @@
 ## RUN EVERTHING WITH DOCKER COMPOSE
 
 1. run `pnpm install --recursive`
-2. run `docker-compose up -d` at the root of the project
+2. build deploy folder for api server `pnpm deploy:api`
+3. run `docker-compose up -d` at the root of the project
 
 **NOTE:**
 
