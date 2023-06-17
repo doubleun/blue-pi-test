@@ -15,6 +15,7 @@ function ProductDetail({ id }: { id: string }) {
     isLoading,
     error,
     data: product,
+    mutate: productMutate,
   } = useSWR([ProductsAPIEndpoints.FETCH_ONE_BY_ID(id), id], ([_url, id]) => {
     return getProductById(id)
   })
@@ -60,6 +61,8 @@ function ProductDetail({ id }: { id: string }) {
         isLoading={loadingPopup}
         setLoadingPopup={setLoadingPopup}
         checkoutPrice={checkoutPrice}
+        product={product}
+        productMutate={productMutate}
       />
 
       {/* TODO: can add product navbar ? */}

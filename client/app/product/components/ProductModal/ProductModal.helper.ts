@@ -21,7 +21,7 @@ export type ChangeStack = {
 export const calculateChange = (
   change: number,
   stockCashes: ICash[],
-  mutate: KeyedMutator<ICash[] | undefined>
+  cashMutate: KeyedMutator<ICash[] | undefined>
 ): ChangeStack | undefined => {
   // for display what user should get back (how many coins or banknotes)
   let changeStack: ChangeStack = {}
@@ -67,7 +67,7 @@ export const calculateChange = (
   }
 
   // update the cash stock
-  mutate(updateCashes(updatedCashStock))
+  cashMutate(updateCashes(updatedCashStock))
 
   return changeStack
 }

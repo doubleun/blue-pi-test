@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import Product from '../model/Product'
+import Product, { IProduct } from '../model/Product'
 
 /**
  * GET - all products
@@ -52,13 +52,22 @@ export const getProductById = async (req: Request, res: Response) => {
     console.error(err)
     res.status(500).json({ error: 'Internal server error' })
   }
-  // res.send('Get a product')
 }
 
 /**
  * PUT - product
  * @description Update a product by id
  */
-export const updateProductById = (req: Request, res: Response) => {
-  res.send('Update product')
+export const updateProductById = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const product: IProduct = req.body
+
+  try {
+    const _updated = await Product.updateOne({ id }, product)
+    console.log(product)
+    res.json(product)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Internal server error' })
+  }
 }

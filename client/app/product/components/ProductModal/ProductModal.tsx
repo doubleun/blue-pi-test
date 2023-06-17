@@ -1,10 +1,15 @@
 'use client'
 
-import { CashesAPIEndpoints } from '@services'
+import {
+  CashesAPIEndpoints,
+  IProduct,
+  ProductsAPIEndpoints,
+  updateProductById,
+} from '@services'
 import { ICash, getCashes } from '@services/cashes'
 import clsx from 'clsx'
 import React, { Dispatch, useCallback, useEffect, useState } from 'react'
-import useSWR from 'swr'
+import useSWR, { KeyedMutator, mutate } from 'swr'
 import CashOption from '../CashOption/CashOption'
 import { calculateAddonPrice } from '../ProductDetail/ProductDetail.helper'
 import { ChangeStack, calculateChange } from './ProductModal.helper'
@@ -16,6 +21,8 @@ interface PopupModalProps {
   isLoading: boolean
   setLoadingPopup: Dispatch<React.SetStateAction<boolean>>
   checkoutPrice: number
+  product: IProduct
+  productMutate: KeyedMutator<IProduct | undefined>
 }
 
 function ProductModal({
@@ -24,12 +31,14 @@ function ProductModal({
   isLoading,
   setLoadingPopup,
   checkoutPrice,
+  product,
+  productMutate,
 }: PopupModalProps) {
   const {
     isLoading: isFetching,
     error,
     data: cashes,
-    mutate,
+    mutate: cashMutate,
   } = useSWR(CashesAPIEndpoints.FETCH_ALL, (_url) => {
     return getCashes()
   })
@@ -65,7 +74,20 @@ function ProductModal({
     // case need change
     if (deductedCheckoutPrice < 0 && cashes) {
       setLoadingPopup(true)
-      const changeStack = calculateChange(deductedCheckoutPrice, cashes, mutate)
+      const changeStack = calculateChange(
+        deductedCheckoutPrice,
+        cashes,
+        cashMutate
+      )
+
+      // update product stock
+      productMutate(
+        updateProductById(`${product.id}`, {
+          ...product,
+          stock: product.stock - 1,
+        })
+      )
+
       console.log('changeStack: ', changeStack)
       setLoadingPopup(false)
 

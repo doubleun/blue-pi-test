@@ -1,12 +1,18 @@
 import React from 'react'
 import Image from 'next/image'
 import { IProduct } from '@services'
+import { cn } from '@utilities'
 
 function ProductCard({ product }: { product: IProduct }) {
   if (!product) return
   return (
     // shadow-xl ??
-    <section className="card w-64 xl:w-full bg-base-100 cursor-pointer group hover:bg-transparent/5 mx-auto">
+    <section
+      className={cn(
+        'card w-64 xl:w-full bg-base-100 group hover:bg-transparent/5 mx-auto',
+        product.stock < 1 && ProductCardTwClass.cardDisable
+      )}
+    >
       <figure className="rounded-2xl">
         <Image
           src={product.imageSrc}
@@ -46,3 +52,7 @@ function ProductCard({ product }: { product: IProduct }) {
 }
 
 export default ProductCard
+
+const ProductCardTwClass = {
+  cardDisable: `cursor-not-allowed bg-slate-800/50 hover:bg-slate-800/50`,
+}
