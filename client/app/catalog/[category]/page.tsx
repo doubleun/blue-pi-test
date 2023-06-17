@@ -3,7 +3,7 @@ import { CatalogNavbar, ProductCardCatalog } from '@catalog/components'
 
 function CatalogPage({ params }: { params: { category: ProductCategory } }) {
   return (
-    <main>
+    <main data-test-id="catalog-page-container">
       <CatalogNavbar category={params.category} />
       <ProductCardCatalog category={params.category} />
     </main>

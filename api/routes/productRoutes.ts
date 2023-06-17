@@ -1,6 +1,6 @@
 import express from 'express'
 import {
-  addProducts,
+  updateProducts,
   getProductById,
   getProducts,
   getProductsByCategory,
@@ -8,7 +8,7 @@ import {
 } from '../controllers/productControllers'
 const router = express.Router()
 
-router.route('/').get(getProducts).post(addProducts)
+router.route('/').get(getProducts).put(updateProducts)
 
 router.route('/category/:category').get(getProductsByCategory)
 

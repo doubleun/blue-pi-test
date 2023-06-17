@@ -10,7 +10,7 @@ import clsx from 'clsx'
  */
 const mapMenuItems = (category: ProductCategory) => {
   return Object.values<string>(ProductCategory).map((option) => (
-    <li key={option}>
+    <li key={option} data-test-id="catalog-navbar-list-parent">
       <Link
         href={`/catalog/${option}`}
         className={clsx(
@@ -18,6 +18,7 @@ const mapMenuItems = (category: ProductCategory) => {
           'capitalize',
           CatalogNavbarTwClass.linkButton
         )}
+        data-test-id={`catalog-navbar-list-${option}`}
       >
         {option}
       </Link>
@@ -27,8 +28,14 @@ const mapMenuItems = (category: ProductCategory) => {
 
 function CatalogNavbar({ category }: { category: ProductCategory }) {
   return (
-    <section className="navbar justify-center my-4">
-      <ul className="menu menu-horizontal gap-2 sm:gap-3 md:gap-6">
+    <section
+      className="navbar justify-center my-4"
+      data-test-id="catalog-navbar-container"
+    >
+      <ul
+        className="menu menu-horizontal gap-2 sm:gap-3 md:gap-6"
+        data-test-id="catalog-navbar-list-container"
+      >
         {mapMenuItems(category)}
       </ul>
     </section>

@@ -16,12 +16,23 @@ export const getProducts = async (req: Request, res: Response) => {
 }
 
 /**
- * POST - add products
- * NOTE: May not needed
- * @description Add all products, should only run once at the app init.
+ * PUT - update products
+ * @description Update all products from DB
  */
-export const addProducts = (req: Request, res: Response) => {
-  res.send('Add products')
+export const updateProducts = async (req: Request, res: Response) => {
+  try {
+    const updatedProducts: IProduct[] = req.body
+    if (!Array.isArray(updatedProducts) || updatedProducts.length < 0)
+      res.status(400).json({ message: 'payload missing' })
+
+    updatedProducts.forEach(async (product) => {
+      await Product.updateOne({ id: product.id }, product)
+    })
+    res.status(200).json(updatedProducts)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Internal server error' })
+  }
 }
 
 /**

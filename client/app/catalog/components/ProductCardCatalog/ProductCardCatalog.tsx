@@ -30,12 +30,16 @@ function ProductCardCatalog({ category }: { category: ProductCategory }) {
     return
   }
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row-dense gap-4 lg:gap-8 lg:mx-8">
+    <section
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row-dense gap-4 lg:gap-8 lg:mx-8"
+      data-test-id="product-card-catalog-container"
+    >
       {products.map((product) => (
         <Link
           href={product.stock < 1 ? '' : `/product/${product.id}`}
           key={product.id}
           className="w-fit mx-auto"
+          data-test-id={`product-card-container-${product.id}-link`}
         >
           <ProductCard key={product.id} product={product} />
         </Link>
