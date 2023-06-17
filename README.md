@@ -11,20 +11,23 @@
 - the server will run on port `3003` by default
 - to connect to the database see **SETUP MONGODB** section down below
 
-### HOW TO SETUP (Local)
+## HOW TO RUN LOCAL
+
+### HOW TO INSTALL
 
 1. Install `pnpm`
-2. Install recursively with `pnpm install --recursive`
-3. Or install separately
-   1. Install client dependencies `pnpm --filter client install`
-   2. Install server api dependencies `pnpm --filter api install`
+2. setup the `.env` file in both api (./api/) server and client folder (./client/)
+3. Install recursively with `pnpm install --recursive`
+   - Or install separately
+     1. Install client dependencies `pnpm --filter client install`
+     2. Install server api dependencies `pnpm --filter api install`
 
 ### RUN DEV
 
 **OPTION 1:** run individually
 
-1. Run client `pnpm --filter client dev`
-2. Run the server api `pnpm --filter api dev`
+1. Run client `pnpm dev:client`
+2. Run the api server `pnpm dev:api`
 
 OPTION 2: run both in the same terminal
 
