@@ -115,15 +115,32 @@ function ProductModal({
   // Handle error
   if (!!displayErrorMessage || error) {
     return (
-      <dialog id="my_modal_1" className={clsx('modal', { 'modal-open': open })}>
-        <form method="dialog" className="modal-box">
-          <div className="w-full flex flex-col items-center py-10">
-            <h3 className="font-bold text-2xl">
+      <dialog
+        id="my_modal_1"
+        className={clsx('modal', { 'modal-open': open })}
+        data-test-id={`product-dialog-container`}
+      >
+        <form
+          method="dialog"
+          className="modal-box"
+          data-test-id={`product-form-dialog-container`}
+        >
+          <div
+            className="w-full flex flex-col items-center py-10"
+            data-test-id="product-dialog-error-msg-container"
+          >
+            <h3
+              className="font-bold text-2xl"
+              data-test-id="product-dialog-error-msg"
+            >
               {displayErrorMessage ?? 'AN ERROR HAS OCCURRED'}
             </h3>
 
             {/* actions */}
-            <div className="modal-action">
+            <div
+              className="modal-action"
+              data-test-id="product-dialog-actions-cancel-container"
+            >
               {/* if there is a button in form, it will close the modal */}
               <button
                 className="btn"
@@ -134,6 +151,7 @@ function ProductModal({
                   setPaymentStack([])
                   setDisplayErrorMessage('')
                 }}
+                data-test-id="product-dialog-actions-cancel-btn"
               >
                 Cancel
               </button>
@@ -160,7 +178,10 @@ function ProductModal({
       <>
         <h2 className="font-bold text-lg">Insert coins or banknotes</h2>
         {/* render coin section */}
-        <div className="w-full flex justify-around mt-4">
+        <div
+          className="w-full flex justify-around mt-4"
+          data-test-id="product-dialog-cash-options-coins"
+        >
           {cashes.map((cash) =>
             cash.type === 'coin' ? (
               <CashOption
@@ -173,7 +194,10 @@ function ProductModal({
         </div>
 
         {/* render banknote section */}
-        <div className="w-full flex flex-wrap gap-x-8 md:gap-x-4 justify-center my-4">
+        <div
+          className="w-full flex flex-wrap gap-x-8 md:gap-x-4 justify-center my-4"
+          data-test-id="product-dialog-cash-options-banknotes"
+        >
           {cashes.map((cash) =>
             cash.type === 'banknote' ? (
               <CashOption
@@ -186,12 +210,23 @@ function ProductModal({
         </div>
 
         {/* render checkout price section */}
-        <div className="w-full flex justify-center mt-8">
-          <h2 className="font-bold text-xl">{deductedCheckoutPrice} Baht</h2>
+        <div
+          className="w-full flex justify-center mt-8"
+          data-test-id="product-dialog-checkout-price-container"
+        >
+          <h2
+            className="font-bold text-xl"
+            data-test-id="product-dialog-checkout-price"
+          >
+            {deductedCheckoutPrice} Baht
+          </h2>
         </div>
 
         {/* actions */}
-        <div className="modal-action">
+        <div
+          className="modal-action"
+          data-test-id="product-dialog-actions-cancel-container"
+        >
           {/* if there is a button in form, it will close the modal */}
           <button
             className="btn"
@@ -202,6 +237,7 @@ function ProductModal({
               setPaymentStack([])
               setDisplayErrorMessage('')
             }}
+            data-test-id="product-dialog-actions-cancel-btn"
           >
             Cancel
           </button>
@@ -214,7 +250,10 @@ function ProductModal({
     const availableChangeStack = Object.keys(changeStack).length > 0
     return (
       <>
-        <div className="w-full flex flex-col items-center py-10">
+        <div
+          className="w-full flex flex-col items-center py-10"
+          data-test-id="product-dialog-success-container"
+        >
           <h3 className="font-bold text-xl md:text-2xl">
             {availableChangeStack
               ? 'Please pickup the change'
@@ -225,7 +264,10 @@ function ProductModal({
           <ChangeDetail changeStack={changeStack} />
 
           {/* actions */}
-          <div className="modal-action justify-center">
+          <div
+            className="modal-action justify-center"
+            data-test-id="product-dialog-actions-confirm-container"
+          >
             <button
               className="btn btn-primary"
               onClick={() => {
@@ -241,6 +283,7 @@ function ProductModal({
                   router.push(`/catalog/${ProductCategory.COFFEE}`)
                 }
               }}
+              data-test-id="product-dialog-actions-confirm-btn"
             >
               Confirm
             </button>
@@ -251,8 +294,16 @@ function ProductModal({
   }
 
   return (
-    <dialog id="my_modal_1" className={clsx('modal', { 'modal-open': open })}>
-      <form method="dialog" className="modal-box">
+    <dialog
+      id="my_modal_1"
+      className={clsx('modal', { 'modal-open': open })}
+      data-test-id={`product-dialog-container`}
+    >
+      <form
+        method="dialog"
+        className="modal-box"
+        data-test-id={`product-dialog-form-container`}
+      >
         {isFetching || isLoading
           ? renderLoadingState()
           : displaySuccess

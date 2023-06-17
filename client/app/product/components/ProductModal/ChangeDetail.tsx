@@ -14,11 +14,12 @@ function ChangeDetail({ changeStack }: { changeStack: ChangeStack }) {
   if (changeStackValues.length < 1) return
 
   return (
-    <div className="w-full mt-4">
+    <div className="w-full mt-4" data-test-id="change-detail-container">
       {changeStackValues.map((change) => (
         <div
           key={change.value}
           className="grid grid-cols-2 justify-center items-center"
+          data-test-id={`change-detail-${change.value}-container`}
         >
           <h3 className="font-semibold text-base md:text-lg text-center">
             {change.amount} * {change.value} THB

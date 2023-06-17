@@ -54,7 +54,10 @@ function ProductDetail({ id }: { id: string }) {
     return
   }
   return (
-    <section className="container h-full relative m-auto px-2 md:px-0 py-6">
+    <section
+      className="container h-full relative m-auto px-2 md:px-0 py-6"
+      data-test-id={`product-detail-container-${id}`}
+    >
       <ProductModal
         open={openPopup}
         setOpenPopup={setOpenPopup}
@@ -69,21 +72,34 @@ function ProductDetail({ id }: { id: string }) {
       <ProductImage product={product} />
 
       {/* product body */}
-      <div className="w-full mt-8 px-6 py-2 rounded-lg bg-white">
+      <div
+        className="w-full mt-8 px-6 py-2 rounded-lg bg-white"
+        data-test-id={`product-detail-body-${id}`}
+      >
         <div className="prose">
           <h3>Additional</h3>
         </div>
 
-        <div className="flex items-center gap-4 my-2">
-          <figure className="bg-zinc-200 p-1 rounded-md">
+        <div
+          className="flex items-center gap-4 my-2"
+          data-test-id={`product-detail-add-coffee-container`}
+        >
+          <figure
+            className="bg-zinc-200 p-1 rounded-md"
+            data-test-id={`product-detail-add-coffee-image-container`}
+          >
             <Image
               src="/coffee-beans.png"
               alt="coffee bean"
               width={30}
               height={30}
+              data-test-id={`product-detail-add-coffee-image`}
             />
           </figure>
-          <div className="flex-1">
+          <div
+            className="flex-1"
+            data-test-id={`product-detail-add-coffee-text`}
+          >
             <h4 className="font-semibold">Extra shot (+15)</h4>
           </div>
           <input
@@ -95,11 +111,18 @@ function ProductDetail({ id }: { id: string }) {
                 ['coffeeShot']: e.target.checked ? 15 : 0,
               }))
             }
+            data-test-id={`product-detail-add-coffee-checkbox`}
           />
         </div>
 
-        <div className="w-full flex items-center gap-4 my-2">
-          <figure className="bg-zinc-200 p-1 rounded-md">
+        <div
+          className="w-full flex items-center gap-4 my-2"
+          data-test-id={`product-detail-add-bubble-container`}
+        >
+          <figure
+            className="bg-zinc-200 p-1 rounded-md"
+            data-test-id={`product-detail-add-bubble-image-container`}
+          >
             <Image
               src="/bubble-tea.png"
               alt="bubble tea"
@@ -107,7 +130,10 @@ function ProductDetail({ id }: { id: string }) {
               height={30}
             />
           </figure>
-          <div className="flex-1">
+          <div
+            className="flex-1"
+            data-test-id={`product-detail-add-bubble-text`}
+          >
             <h4 className="font-semibold">Tapioca Pearls (+5)</h4>
           </div>
           <input
@@ -119,6 +145,7 @@ function ProductDetail({ id }: { id: string }) {
                 ['bubble']: e.target.checked ? 5 : 0,
               }))
             }
+            data-test-id={`product-detail-add-bubble-checkbox`}
           />
         </div>
       </div>
@@ -127,6 +154,7 @@ function ProductDetail({ id }: { id: string }) {
       <button
         className="btn bg-gray-100 border-none absolute bottom-6 left-0 mx-2 md:mx-0"
         onClick={() => router.push(`/catalog/${product.category}`)}
+        data-test-id={`product-detail-go-back-btn`}
       >
         <div className="prose flex">
           <h4 className="text-amber-800">Go Back</h4>
@@ -140,6 +168,7 @@ function ProductDetail({ id }: { id: string }) {
           setOpenPopup(true)
           // setLoadingPopup(true)
         }}
+        data-test-id={`product-detail-buy-btn`}
       >
         <div className="prose flex">
           <h4 className="border-r-2 border-slate-900 pr-4">Buy now</h4>
