@@ -7,5 +7,12 @@ export const ProductsAPIEndpoints = {
   FETCH_ONE_BY_ID: (id: string) => `/api/products/id/${id}`,
 } as const
 
-export type ProductsAPIEndpoints =
+export type IProductsAPIEndpoints =
+  (typeof ProductsAPIEndpoints)[keyof typeof ProductsAPIEndpoints]
+
+export const CashesAPIEndpoints = {
+  FETCH_ALL: () => `/api/cashes`,
+} as const
+
+export type ICashesAPIEndpoints =
   (typeof ProductsAPIEndpoints)[keyof typeof ProductsAPIEndpoints]

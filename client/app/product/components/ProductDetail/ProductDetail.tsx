@@ -3,10 +3,11 @@
 import React, { useEffect, useState } from 'react'
 import ProductImage from './ProductImage'
 import Image from 'next/image'
-import { calculateCheckoutPrice } from './ProductDetail.helper'
+import { calculateAddonPrice } from './ProductDetail.helper'
 import useSWR from 'swr'
 import { ProductsAPIEndpoints, getProductById } from '@services'
 import { useRouter } from 'next/navigation'
+import ProductModal from '../ProductModal/ProductModal'
 
 function ProductDetail({ id }: { id: string }) {
   // TOOD: make new hook for this
@@ -17,7 +18,10 @@ function ProductDetail({ id }: { id: string }) {
   } = useSWR([ProductsAPIEndpoints.FETCH_ONE_BY_ID(id), id], ([_url, id]) => {
     return getProductById(id)
   })
+
   const router = useRouter()
+  const [openPopup, setOpenPopup] = useState<boolean>(false)
+  const [loadingPopup, setLoadingPopup] = useState<boolean>(false)
   const [checkoutPrice, setCheckoutPrice] = useState(product?.price)
   const [additional, setAdditional] = useState<{
     coffeeShot: number
@@ -27,8 +31,9 @@ function ProductDetail({ id }: { id: string }) {
   useEffect(() => {
     if (product) {
       // consider using `useTransition` to potentially reduce the re-render
+      // handle checkout ad
       setCheckoutPrice(
-        calculateCheckoutPrice(product, Object.values(additional))
+        calculateAddonPrice(product.price, 'add', Object.values(additional))
       )
     }
   }, [additional, product])
@@ -49,6 +54,14 @@ function ProductDetail({ id }: { id: string }) {
   }
   return (
     <section className="container h-full relative m-auto px-2 md:px-0 py-6">
+      <ProductModal
+        open={openPopup}
+        setOpenPopup={setOpenPopup}
+        isLoading={loadingPopup}
+        setLoadingPopup={setLoadingPopup}
+        checkoutPrice={checkoutPrice}
+      />
+
       {/* TODO: can add product navbar ? */}
       <ProductImage product={product} />
 
@@ -117,7 +130,14 @@ function ProductDetail({ id }: { id: string }) {
         </div>
       </button>
 
-      <button className="btn btn-primary absolute bottom-6 right-0 mx-2 md:mx-0">
+      <button
+        className="btn btn-primary absolute bottom-6 right-0 mx-2 md:mx-0"
+        onClick={() => {
+          // handle buy logic
+          setOpenPopup(true)
+          // setLoadingPopup(true)
+        }}
+      >
         <div className="prose flex">
           <h4 className="border-r-2 border-slate-900 pr-4">Buy now</h4>
           <h4 className="pl-4" id="checkoutPrice">{`${checkoutPrice} Baht`}</h4>
