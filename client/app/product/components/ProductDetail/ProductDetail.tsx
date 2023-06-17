@@ -4,9 +4,9 @@ import React from 'react'
 import ProductImage from './ProductImage'
 import Image from 'next/image'
 import { calculateCheckoutPrice } from './ProductDetail.helper'
-import Link from 'next/link'
 import useSWR from 'swr'
 import { ProductsAPIEndpoints, getProductById, request } from '@services'
+import { useRouter } from 'next/navigation'
 
 function ProductDetail({ id }: { id: string }) {
   // TOOD: make new hook for this
@@ -17,6 +17,7 @@ function ProductDetail({ id }: { id: string }) {
   } = useSWR([ProductsAPIEndpoints.FETCH_ONE_BY_ID(id), id], ([_url, id]) => {
     return getProductById(id)
   })
+  const router = useRouter()
 
   // TODO:maybe throw an error
   if (!product) {
@@ -51,16 +52,14 @@ function ProductDetail({ id }: { id: string }) {
       </div>
 
       {/* actions */}
-      {/* <Link href={`/catalog/${product.category}`}> */}
       <button
         className="btn bg-gray-100 border-none absolute bottom-6 left-0 mx-2 md:mx-0"
-        onClick={() => history.back()}
+        onClick={() => router.push(`/catalog/${product.category}`)}
       >
         <div className="prose flex">
           <h4 className="text-amber-800">Go Back</h4>
         </div>
       </button>
-      {/* </Link> */}
       <button className="btn btn-primary absolute bottom-6 right-0 mx-2 md:mx-0">
         <div className="prose flex">
           <h4 className="border-r-2 border-slate-900 pr-4">Buy now</h4>

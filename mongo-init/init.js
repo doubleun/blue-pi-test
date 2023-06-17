@@ -78,6 +78,7 @@ db.products.insertMany([
     highlights: ['Iced'],
   },
   {
+    id: 3,
     name: 'Latte',
     descriptions: 'Rich espresso and milk poured over ice.',
     category: 'coffee',
@@ -89,7 +90,7 @@ db.products.insertMany([
     highlights: ['Popular', 'Iced'],
   },
   {
-    id: 3,
+    id: 4,
     name: 'Mocha',
     descriptions:
       'Espresso, chocolate sauce and milk served on ice, topped with whipped cream.',
@@ -102,7 +103,7 @@ db.products.insertMany([
     highlights: ['Iced'],
   },
   {
-    id: 4,
+    id: 5,
     name: 'Yuzu Cold Brew',
     descriptions:
       'The perfectly balanced of Blue Vending Cold Brew and the citrus Yuzu adding a good freshness during the day.',
@@ -115,7 +116,7 @@ db.products.insertMany([
     highlights: ['Iced'],
   },
   {
-    id: 5,
+    id: 6,
     name: 'Iced White Chocolate Mocha',
     descriptions:
       'Espresso meets white chocolate sauce, milk, and whipped cream.',
@@ -128,7 +129,7 @@ db.products.insertMany([
     highlights: ['Iced'],
   },
   {
-    id: 6,
+    id: 7,
     name: 'Iced Pure Matcha Latte',
     descriptions:
       'An elevated no-sugar matcha powder, infused with milk, syrup and ice.',
@@ -141,7 +142,7 @@ db.products.insertMany([
     highlights: ['Popular', 'Iced'],
   },
   {
-    id: 7,
+    id: 8,
     name: 'Pure Matcha Frappuccino®',
     descriptions:
       'An elevated no-sugar matcha powder, blended with syrup, milk and ice. Topped with whipped cream.',
@@ -154,7 +155,7 @@ db.products.insertMany([
     highlights: ['Frappe'],
   },
   {
-    id: 8,
+    id: 9,
     name: 'Earl Grey Tea',
     descriptions: 'Black tea, fragrant bergamot and lavender.',
     category: 'tea',
@@ -166,7 +167,7 @@ db.products.insertMany([
     highlights: ['Hot'],
   },
   {
-    id: 9,
+    id: 10,
     name: 'Earl Grey Tea Latte',
     descriptions:
       'Earl Grey Tea with vanilla syrup, hot water, steamed milk and foam.',
@@ -179,7 +180,7 @@ db.products.insertMany([
     highlights: ['Hot'],
   },
   {
-    id: 10,
+    id: 11,
     name: 'Chai Tea',
     descriptions:
       'Black tea infused with warm clove, cardamom, cinnamon and ginger notes.',
@@ -192,7 +193,7 @@ db.products.insertMany([
     highlights: ['Hot'],
   },
   {
-    id: 11,
+    id: 12,
     name: 'Chai Tea Latte',
     descriptions: 'Black tea with perfect balance of sweet and spicy.',
     category: 'tea',
@@ -204,7 +205,7 @@ db.products.insertMany([
     highlights: ['Hot'],
   },
   {
-    id: 12,
+    id: 13,
     name: 'Hojicha Tea Latte',
     descriptions: 'A roasted Japanese green tea latte with steamed milk.',
     category: 'tea',
@@ -216,7 +217,7 @@ db.products.insertMany([
     highlights: ['Hot'],
   },
   {
-    id: 13,
+    id: 14,
     name: 'Classic Chocolate',
     descriptions:
       'Milk and bittersweet chocolate with whipped cream and chocolate sauce.',
@@ -229,7 +230,7 @@ db.products.insertMany([
     highlights: ['Hot'],
   },
   {
-    id: 14,
+    id: 15,
     name: 'Signature Chocolate',
     descriptions:
       'Cocoas and fresh milk with whipped cream and chocolate powder.',
@@ -242,7 +243,7 @@ db.products.insertMany([
     highlights: ['Popular', 'Hot'],
   },
   {
-    id: 15,
+    id: 16,
     name: 'Cold Milk',
     descriptions: 'A simply beverage served chilled or over ice.',
     category: 'non-coffee',
