@@ -1,12 +1,35 @@
+## RUN EVERTHING WITH DOCKER COMPOSE
+
+1. run `pnpm install --recursive`
+2. run `docker-compose up -d` at the root of the project
+
+**NOTE:**
+
+- see `.env.example` of each package (client and server)
+- the client will run on port `3000` by default
+- the server will run on port `3003` by default
+- to connect to the database see **SETUP MONGODB** section down below
+
 ### HOW TO SETUP (Local)
 
 1. Install `pnpm`
-2. Install client dependencies `pnpm --filter client install`
-3. Install server api dependencies `pnpm --filter api install`
-4. Run client `pnpm --filter client dev`
-5. Run the server api `pnpm --filter api dev`
+2. Install recursively with `pnpm install --recursive`
+3. Or install separately
+   1. Install client dependencies `pnpm --filter client install`
+   2. Install server api dependencies `pnpm --filter api install`
 
-#### SETUP MONGODB
+### RUN DEV
+
+**OPTION 1:** run individually
+
+1. Run client `pnpm --filter client dev`
+2. Run the server api `pnpm --filter api dev`
+
+OPTION 2: run both in the same terminal
+
+1. Run `pnpm dev`
+
+### SETUP MONGODB
 
 **OPTION 1 (Recommend):**
 

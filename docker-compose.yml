@@ -1,13 +1,32 @@
 version: '3.8'
 
 services:
-  mongodb:
-    image: mongo:latest
-    restart: always
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=password
-    volumes:
-      - ./mongo-init/:/docker-entrypoint-initdb.d/:ro
+  # mongodb:
+  #   image: mongo:latest
+  #   restart: always
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=root
+  #     - MONGO_INITDB_ROOT_PASSWORD=password
+  #   # networks:
+  #   #   - vending-network
+  #   ports:
+  #     - 27017:27017
+  #   volumes:
+  #     - ./mongo-init/:/docker-entrypoint-initdb.d/:ro
+
+  api:
+    build: .
     ports:
-      - 27017:27017
+      - 3003:3003
+    volumes:
+      - .:/app
+    environment:
+      - PORT=3003
+      - MONGO_URI=mongodb://mongodb:27017/blue-pi-vending
+    # depends_on:
+    #   - mongodb
+    # networks:
+    #   - vending-network
+# networks:
+#   vending-network:
+#     driver: bridge
