@@ -12,6 +12,7 @@ export type IProductsAPIEndpoints =
 
 export const CashesAPIEndpoints = {
   FETCH_ALL: () => `/api/cashes`,
+  UPDATE_ALL: () => `/api/cashes`,
 } as const
 
 export type ICashesAPIEndpoints =

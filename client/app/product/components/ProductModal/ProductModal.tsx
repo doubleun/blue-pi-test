@@ -7,6 +7,8 @@ import React, { Dispatch, useCallback, useEffect, useState } from 'react'
 import useSWR from 'swr'
 import CashOption from '../CashOption/CashOption'
 import { calculateAddonPrice } from '../ProductDetail/ProductDetail.helper'
+import { ChangeStack, calculateChange } from './ProductModal.helper'
+import { useRouter } from 'next/navigation'
 
 interface PopupModalProps {
   open: boolean
@@ -27,6 +29,7 @@ function ProductModal({
     isLoading: isFetching,
     error,
     data: cashes,
+    mutate,
   } = useSWR(CashesAPIEndpoints.FETCH_ALL, (_url) => {
     return getCashes()
   })
@@ -34,7 +37,11 @@ function ProductModal({
   const [deductedCheckoutPrice, setDeductedCheckoutPrice] =
     useState<number>(checkoutPrice)
   const [paymentStack, setPaymentStack] = useState<ICash[]>([])
+  const [displaySuccess, setDisplaySuccess] = useState<boolean>(false)
+  const [changeStack, setChangeStack] = useState<ChangeStack>({})
+  const router = useRouter()
 
+  // For updating the UI on re-opening the modal
   useEffect(() => {
     setDeductedCheckoutPrice(checkoutPrice)
     setPaymentStack([])
@@ -46,34 +53,56 @@ function ProductModal({
       setPaymentStack((prev) => [...prev, cash])
 
       // update checkout price after deducted
-      setDeductedCheckoutPrice((prev) => {
-        const calPrice = calculateAddonPrice(prev, 'deduct', [cash.value])
-        if (calPrice <= 0) {
-          // clean up callback -> display loading -> calculate change -> fired API to update cash stock and product stock -> clear payment stack -> display success and close modal
-        }
-        return calPrice
-      })
+      setDeductedCheckoutPrice((prev) =>
+        calculateAddonPrice(prev, 'deduct', [cash.value])
+      )
     },
     []
   )
 
-  if (isLoading || isFetching || !cashes) {
+  // Check if the current deductedCheckoutPrice is lower than or equal to zero. To calculate the change and update cash stock
+  useEffect(() => {
+    // case need change
+    if (deductedCheckoutPrice < 0 && cashes) {
+      setLoadingPopup(true)
+      const changeStack = calculateChange(deductedCheckoutPrice, cashes, mutate)
+      console.log('changeStack: ', changeStack)
+      setLoadingPopup(false)
+
+      // TODO: throw error ?
+      if (!changeStack) {
+        setOpenPopup(false)
+        return
+      }
+
+      setChangeStack(changeStack)
+      setDisplaySuccess(true)
+      // display changeStack as UI with an OK button (mutation of cash option stock on the server will run along side this)
+      // after user click OK display success with another OK button
+      // after close success clear everything and redirect to catalog page
+    }
+
+    // case no change needed
+    if (deductedCheckoutPrice === 0 && paymentStack.length > 0) {
+      // update the product stock
+      // and display success with ok button
+      // after close success clear everything and redirect to catalog page
+    }
+    setPaymentStack([])
+  }, [deductedCheckoutPrice])
+
+  if (!cashes) {
     return <p>loading. . .</p>
   }
 
-  console.log('paymentStack: ', paymentStack)
+  // console.log('paymentStack: ', paymentStack)
 
   const renderLoadingState = () => {
     return (
       <>
-        <h3 className="font-bold text-lg">Select payment</h3>
-        <div className="w-full flex justify-center">
-          <span className="loading loading-dots loading-lg"></span>
-        </div>
-        <p className="py-4">Press ESC key or click the button below to close</p>
-        <div className="modal-action">
-          {/* if there is a button in form, it will close the modal */}
-          <button className="btn">Close</button>
+        <div className="w-full flex flex-col items-center py-10">
+          <h3 className="font-bold text-2xl">LOADING...</h3>
+          <span className="loading loading-dots loading-lg mt-6"></span>
         </div>
       </>
     )
@@ -113,6 +142,8 @@ function ProductModal({
         <div className="w-full flex justify-center mt-8">
           <h2 className="font-bold text-xl">{deductedCheckoutPrice} Baht</h2>
         </div>
+
+        {/* actions */}
         <div className="modal-action">
           {/* if there is a button in form, it will close the modal */}
           <button
@@ -130,10 +161,50 @@ function ProductModal({
     )
   }
 
+  const renderPaymentOrSuccessState = () => {
+    const availableChangeStack = Object.keys(changeStack).length > 0
+    return (
+      <>
+        <div className="w-full flex flex-col items-center py-10">
+          <h3 className="font-bold text-2xl">
+            {availableChangeStack
+              ? 'Please pickup the change'
+              : 'Enjoy your drink !'}
+          </h3>
+
+          {/* actions */}
+          <div className="modal-action justify-center">
+            {/* if there is a button in form, it will close the modal */}
+            <button
+              className="btn btn-secondary"
+              onClick={() => {
+                if (availableChangeStack) {
+                  // case: there's change stack from calculate change. the confirm will open success and clear the change stack
+                  setChangeStack({})
+                } else {
+                  setOpenPopup(false)
+                  setDeductedCheckoutPrice(checkoutPrice)
+                  setPaymentStack([])
+                  router.push('/catalog/coffee')
+                }
+              }}
+            >
+              Confirm
+            </button>
+          </div>
+        </div>
+      </>
+    )
+  }
+
   return (
     <dialog id="my_modal_1" className={clsx('modal', { 'modal-open': open })}>
       <form method="dialog" className="modal-box">
-        {renderPayState()}
+        {isFetching || isLoading
+          ? renderLoadingState()
+          : displaySuccess
+          ? renderPaymentOrSuccessState()
+          : renderPayState()}
       </form>
     </dialog>
   )

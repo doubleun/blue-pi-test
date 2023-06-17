@@ -22,7 +22,7 @@ function ProductDetail({ id }: { id: string }) {
   const router = useRouter()
   const [openPopup, setOpenPopup] = useState<boolean>(false)
   const [loadingPopup, setLoadingPopup] = useState<boolean>(false)
-  const [checkoutPrice, setCheckoutPrice] = useState(product?.price)
+  const [checkoutPrice, setCheckoutPrice] = useState(product?.price ?? 1)
   const [additional, setAdditional] = useState<{
     coffeeShot: number
     bubble: number
@@ -80,8 +80,8 @@ function ProductDetail({ id }: { id: string }) {
               height={30}
             />
           </figure>
-          <div className="prose flex-1">
-            <h4>Extra shot (+15)</h4>
+          <div className="flex-1">
+            <h4 className="font-semibold">Extra shot (+15)</h4>
           </div>
           <input
             type="checkbox"
@@ -95,7 +95,7 @@ function ProductDetail({ id }: { id: string }) {
           />
         </div>
 
-        <div className="flex items-center gap-4 my-2">
+        <div className="w-full flex items-center gap-4 my-2">
           <figure className="bg-zinc-200 p-1 rounded-md">
             <Image
               src="/bubble-tea.png"
@@ -104,8 +104,8 @@ function ProductDetail({ id }: { id: string }) {
               height={30}
             />
           </figure>
-          <div className="prose flex-1">
-            <h4>Tapioca Pearls (+5)</h4>
+          <div className="flex-1">
+            <h4 className="font-semibold">Tapioca Pearls (+5)</h4>
           </div>
           <input
             type="checkbox"

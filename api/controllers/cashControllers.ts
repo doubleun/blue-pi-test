@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import Cash from '../model/Cash'
+import Cash, { ICash } from '../model/Cash'
 
 /**
- * GET - get coins (1, 5, 10) and banknotes (20, 50, 100, 500, 1000) stocks
+ * GET - get all coins (1, 5, 10) and banknotes (20, 50, 100, 500, 1000) stocks
  * @description Get cash status - (current coins, current banknotes)
  */
 export const getCashOptions = async (req: Request, res: Response) => {
@@ -16,20 +16,32 @@ export const getCashOptions = async (req: Request, res: Response) => {
 }
 
 /**
+ * PUT - update all coins (1, 5, 10) and banknotes (20, 50, 100, 500, 1000) stocks
+ * @description Update cash status - (coins, banknotes stock)
+ */
+export const updateCashOptions = async (req: Request, res: Response) => {
+  try {
+    const updatedCashOptions: ICash[] = req.body
+    if (!updatedCashOptions || updatedCashOptions?.length < 0)
+      res.status(400).json({ message: 'payload missing' })
+
+    updatedCashOptions.forEach(async (cash) => {
+      await Cash.updateOne({ id: cash.id }, cash)
+    })
+    res.status(200).json(updateCashOptions)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+}
+
+/**
  * POST - add coins (1, 5, 10) and banknotes (20, 50, 100, 500, 1000) options
  * * NOTE: May not needed
  * @description Add multiple cash options, should only run once at the app init.
  */
 export const addCashOptions = (req: Request, res: Response) => {
   res.send('Add cash options')
-}
-
-/**
- * PUT - update coins (1, 5, 10) and banknotes (20, 50, 100, 500, 1000) stocks
- * @description Update cash status - (coins, banknotes stock)
- */
-export const updateCashOptions = (req: Request, res: Response) => {
-  res.send('Update cash options')
 }
 
 // /**

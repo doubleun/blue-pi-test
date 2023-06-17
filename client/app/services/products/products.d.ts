@@ -1,11 +1,11 @@
 export interface IProduct {
-  id: int
+  id: number
   name: string
   descriptions: string
   category: string
   imageSrc: string
-  price: int
-  stock: int
+  price: number
+  stock: number
   new?: boolean
   highlights?: string[]
 }
