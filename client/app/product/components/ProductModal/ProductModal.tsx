@@ -75,19 +75,15 @@ function ProductModal({
   // Check if the current deductedCheckoutPrice is lower than or equal to zero. To calculate the change and update cash stock
   useEffect(() => {
     // case need change
-    if (deductedCheckoutPrice < 0 && cashes) {
+    if (deductedCheckoutPrice <= 0 && cashes) {
       setLoadingPopup(true)
       const changeStack = calculateChange(
+        paymentStack,
         deductedCheckoutPrice,
         cashes,
         cashMutate,
         setDisplayErrorMessage
       )
-
-      // handle no change
-      if (!changeStack) {
-        return
-      }
 
       // update product stock
       productMutate(
@@ -104,30 +100,12 @@ function ProductModal({
       )
       setLoadingPopup(false)
 
-      setChangeStack(changeStack)
-      setDisplaySuccess(true)
-    }
+      setPaymentStack([])
 
-    // case no change needed
-    if (deductedCheckoutPrice === 0 && paymentStack.length > 0) {
-      // update product stock
-      productMutate(
-        updateProductById(`${product.id}`, {
-          ...product,
-          stock: product.stock - 1,
-        })
-      )
-      // revalidate the cached products in catalog page
-      mutate(
-        ProductsAPIEndpoints.FETCH_BY_CATEGORY(
-          product.category as ProductCategory
-        )
-      )
-      // display success
-      setChangeStack({})
+      // handle case if change UI needs to be display
+      setChangeStack(changeStack ? changeStack : {})
       setDisplaySuccess(true)
     }
-    setPaymentStack([])
   }, [deductedCheckoutPrice])
 
   if (!cashes) {

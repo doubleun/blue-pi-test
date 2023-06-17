@@ -5,9 +5,11 @@ import { ChangeStack } from './ChangeDetail'
 import { Dispatch } from 'react'
 
 /**
+ * @param paymentStack - array of cash options user paid
  * @param change - changes from the checkout price (checkout price - total customer paid) basically a `deductedCheckoutPrice`
  */
 export const calculateChange = (
+  paymentStack: ICash[],
   change: number,
   stockCashes: ICash[],
   cashMutate: KeyedMutator<ICash[] | undefined>,
@@ -17,6 +19,14 @@ export const calculateChange = (
   let changeStack: ChangeStack = {}
   let updatedCashStock = [...stockCashes]
   let currentChange = Math.abs(change)
+
+  // add customer's cash input to the existing cash stock
+  paymentStack.forEach((cashInput) => {
+    const cashInputIndex = updatedCashStock.findIndex(
+      (cashStock) => cashInput.id === cashStock.id
+    )
+    updatedCashStock[cashInputIndex].amount++
+  })
 
   // filter any cash option that exceed the currentChange amount and sort from top to bottom
   const nearestCashStockAvailable = updatedCashStock
@@ -28,7 +38,6 @@ export const calculateChange = (
   while (currentChange > 0) {
     // check if the index exceeds the current available cash options
     const currentOption = nearestCashStockAvailable?.[index]
-    // console.log('currentOption before deduct: ', currentOption)
 
     // handle no change
     if (!currentOption) {
@@ -52,9 +61,6 @@ export const calculateChange = (
       } else {
         changeStack[currentOption.id] = { ...currentOption, amount: 1 }
       }
-
-      // console.log('currentOption after deduct: ', currentOption)
-      // console.log('updatedCashStock: ', updatedCashStock)
     } else {
       index++
     }
