@@ -4,15 +4,6 @@ import { KeyedMutator } from 'swr'
 import { ChangeStack } from './ChangeDetail'
 
 /**
- * @param paymentStack - cashes from customer
- * @param stockCashes - cashes available in stock from the server
- */
-export const calculateCashesStock = (
-  paymentStack: ICash[],
-  stockCashes: ICash[]
-) => {}
-
-/**
  * @param change - changes from the checkout price (checkout price - total customer paid) basically a `deductedCheckoutPrice`
  */
 export const calculateChange = (
@@ -24,7 +15,6 @@ export const calculateChange = (
   let changeStack: ChangeStack = {}
   let updatedCashStock = [...stockCashes]
   let currentChange = Math.abs(change)
-  console.log('currentChange: ', currentChange)
 
   // filter any cash option that exceed the currentChange amount and sort from top to bottom
   const nearestCashStockAvailable = updatedCashStock

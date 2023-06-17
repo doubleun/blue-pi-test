@@ -9,12 +9,14 @@ import {
 import { ICash, getCashes } from '@services/cashes'
 import clsx from 'clsx'
 import React, { Dispatch, useCallback, useEffect, useState } from 'react'
-import useSWR, { KeyedMutator } from 'swr'
+import useSWR, { KeyedMutator, mutate } from 'swr'
 import CashOption from '../CashOption/CashOption'
 import { calculateAddonPrice } from '../ProductDetail/ProductDetail.helper'
 import { calculateChange } from './ProductModal.helper'
 import { useRouter } from 'next/navigation'
 import ChangeDetail, { ChangeStack } from './ChangeDetail'
+import { revalidatePath } from 'next/cache'
+import { ProductCategory } from '@constants'
 
 interface PopupModalProps {
   open: boolean
@@ -82,11 +84,18 @@ function ProductModal({
       )
 
       // update product stock
+      console.log('product.stock: ', product.stock)
       productMutate(
         updateProductById(`${product.id}`, {
           ...product,
           stock: product.stock - 1,
         })
+      )
+      // revalidate the cached products in catalog page
+      mutate(
+        ProductsAPIEndpoints.FETCH_BY_CATEGORY(
+          product.category as ProductCategory
+        )
       )
 
       console.log('changeStack: ', changeStack)
