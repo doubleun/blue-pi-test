@@ -1,12 +1,11 @@
 import { ProductCategory } from '@constants'
-import { apiServerUrl } from './serviceConfig'
 
-export const ProductsAPIRoutes = {
-  FETCH_ALL: () => `${apiServerUrl}/api/products`,
+export const ProductsAPIEndpoints = {
+  FETCH_ALL: () => `/api/products`,
   FETCH_BY_CATEGORY: (category: ProductCategory) =>
-    `${apiServerUrl}/api/products/category/${category}`,
-  FETCH_ONE_BY_ID: (id: string) => `${apiServerUrl}/api/products/id/${id}`,
+    `/api/products/category/${category}`,
+  FETCH_ONE_BY_ID: (id: string) => `/api/products/id/${id}`,
 } as const
 
-export type ProductsAPIRoutes =
-  (typeof ProductsAPIRoutes)[keyof typeof ProductsAPIRoutes]
+export type ProductsAPIEndpoints =
+  (typeof ProductsAPIEndpoints)[keyof typeof ProductsAPIEndpoints]

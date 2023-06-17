@@ -1,4 +1,4 @@
-import { ProductsAPIRoutes } from '@services/config'
+import { ProductsAPIEndpoints, request } from '@services/config'
 import { IProduct } from './products'
 import { ProductCategory } from '@constants'
 
@@ -9,12 +9,14 @@ const getProducts = async (
     let products
     if (category) {
       // fetch by category case
-      products = await fetch(ProductsAPIRoutes.FETCH_BY_CATEGORY(category))
+      products = await request.get(
+        ProductsAPIEndpoints.FETCH_BY_CATEGORY(category)
+      )
     } else {
       // fetch all case
-      products = await fetch(ProductsAPIRoutes.FETCH_ALL())
+      products = await request.get(ProductsAPIEndpoints.FETCH_ALL())
     }
-    return await products.json()
+    return products.data
   } catch (err) {
     console.error(err)
     return
