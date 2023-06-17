@@ -1,12 +1,18 @@
 import { Request, Response } from 'express'
+import Product from '../model/Product'
 
 /**
  * GET - all products
- * @description Get all products from DB, all products stock
+ * @description Get all products from DB
  */
-export const getProducts = (req: Request, res: Response) => {
-  // res.send('Get all products')
-  res.json()
+export const getProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await Product.find()
+    res.json(products)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Internal server error' })
+  }
 }
 
 /**
@@ -16,6 +22,21 @@ export const getProducts = (req: Request, res: Response) => {
  */
 export const addProducts = (req: Request, res: Response) => {
   res.send('Add products')
+}
+
+/**
+ * GET - products by category
+ * @description Get products by category
+ */
+export const getProductsByCategory = async (req: Request, res: Response) => {
+  const { category } = req.params
+  try {
+    const products = await Product.find({ category })
+    res.json(products)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Internal server error' })
+  }
 }
 
 /**

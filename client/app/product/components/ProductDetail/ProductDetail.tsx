@@ -2,15 +2,15 @@
 
 import React from 'react'
 import ProductImage from './ProductImage'
-import getProducts from '@services/products/getProducts'
 import Image from 'next/image'
 import { calculateCheckoutPrice } from './ProductDetail.helper'
 // import useSWR from 'swr'
 
 async function ProductDetail({ id }: { id: string }) {
-  // const data = useSWR('/products', getProducts)
+  // const data = useSWR('/products', getMockProducts)
   // FIXME: remove this mock
-  const mockProduct = (await getProducts()).find((itm) => itm.id === id)
+  const mockProduct = {}
+
   // TODO:maybe throw an error
   if (!mockProduct) {
     console.error('Product not found')

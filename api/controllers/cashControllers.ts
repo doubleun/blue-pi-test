@@ -13,7 +13,6 @@ export const getCashOptions = async (req: Request, res: Response) => {
     console.error(err)
     res.status(500).json({ error: 'Internal server error' })
   }
-  // res.send('Get cash options')
 }
 
 /**

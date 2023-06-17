@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
  * @property type - Enum: Coin, Banknote
  */
 const cashSchema = new mongoose.Schema({
+  id: Number,
   type: String,
   value: Number,
   amount: Number,

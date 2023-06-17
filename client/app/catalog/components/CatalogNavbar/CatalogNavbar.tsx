@@ -8,13 +8,13 @@ import clsx from 'clsx'
  * @param id - value of the ProductCategory enum. For setting active in the UI
  * @todo move to helper file if more logic is needed
  */
-const mapMenuItems = (id: ProductCategory) => {
+const mapMenuItems = (category: ProductCategory) => {
   return Object.values<string>(ProductCategory).map((option) => (
     <li key={option}>
       <Link
         href={`/catalog/${option}`}
         className={clsx(
-          option === id && 'active',
+          option === category && 'active',
           'capitalize',
           CatalogNavbarTwClass.linkButton
         )}
@@ -25,11 +25,11 @@ const mapMenuItems = (id: ProductCategory) => {
   ))
 }
 
-function CatalogNavbar({ id }: { id: ProductCategory }) {
+function CatalogNavbar({ category }: { category: ProductCategory }) {
   return (
     <section className="navbar justify-center my-4">
       <ul className="menu menu-horizontal gap-2 sm:gap-3 md:gap-6">
-        {mapMenuItems(id)}
+        {mapMenuItems(category)}
       </ul>
     </section>
   )

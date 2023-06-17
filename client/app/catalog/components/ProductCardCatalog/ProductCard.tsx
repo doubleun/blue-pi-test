@@ -1,19 +1,15 @@
 import React from 'react'
 import Image from 'next/image'
+import { IProduct } from '@services'
 
-interface ProductCardProps {
-  // TODO: Fix product type
-  product: any
-}
-
-function ProductCard({ product }: ProductCardProps) {
+function ProductCard({ product }: { product: IProduct }) {
   if (!product) return
   return (
     // shadow-xl ??
     <section className="card w-64 xl:w-full bg-base-100 cursor-pointer group hover:bg-transparent/5 mx-auto">
       <figure className="rounded-2xl">
         <Image
-          src={product.src}
+          src={product.imageSrc}
           alt={product.name}
           width={600}
           height={600}
@@ -25,14 +21,19 @@ function ProductCard({ product }: ProductCardProps) {
       <div className="card-body bg-transparent">
         <h2 className="card-title">
           {product.name}
-          <div className="badge badge-secondary">NEW</div>
+          {product?.new ? (
+            <div className="badge badge-secondary">NEW</div>
+          ) : null}
         </h2>
         <p>{product.descriptions}</p>
 
         {/* card badges */}
         <div className="card-actions justify-end">
-          <div className="badge badge-outline">Fashion</div>
-          <div className="badge badge-outline">Products</div>
+          {product?.highlights?.map((highlight) => (
+            <div className="badge badge-outline" key={highlight}>
+              {highlight}
+            </div>
+          ))}
         </div>
 
         {/* card footer */}
