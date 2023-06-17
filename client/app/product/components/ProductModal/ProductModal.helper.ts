@@ -2,6 +2,7 @@ import { ICash } from '@services/cashes'
 import updateCashes from '@services/cashes/updateCashes'
 import { KeyedMutator } from 'swr'
 import { ChangeStack } from './ChangeDetail'
+import { Dispatch } from 'react'
 
 /**
  * @param change - changes from the checkout price (checkout price - total customer paid) basically a `deductedCheckoutPrice`
@@ -9,7 +10,8 @@ import { ChangeStack } from './ChangeDetail'
 export const calculateChange = (
   change: number,
   stockCashes: ICash[],
-  cashMutate: KeyedMutator<ICash[] | undefined>
+  cashMutate: KeyedMutator<ICash[] | undefined>,
+  setDisplayErrorMessage: Dispatch<React.SetStateAction<string>>
 ): ChangeStack | undefined => {
   // for display what user should get back (how many coins or banknotes)
   let changeStack: ChangeStack = {}
@@ -28,8 +30,13 @@ export const calculateChange = (
     const currentOption = nearestCashStockAvailable?.[index]
     // console.log('currentOption before deduct: ', currentOption)
 
-    // TODO: throw error
-    if (!currentOption) return
+    // handle no change
+    if (!currentOption) {
+      setDisplayErrorMessage(
+        'Sorry the machine does not have any change. Please select other menu.'
+      )
+      return
+    }
 
     // check if the current cash option in stock is not empty and it is less than or the same as the left over change
     if (currentOption.amount > 0 && currentOption.value <= currentChange) {

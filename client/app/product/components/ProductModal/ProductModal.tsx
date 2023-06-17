@@ -15,7 +15,6 @@ import { calculateAddonPrice } from '../ProductDetail/ProductDetail.helper'
 import { calculateChange } from './ProductModal.helper'
 import { useRouter } from 'next/navigation'
 import ChangeDetail, { ChangeStack } from './ChangeDetail'
-import { revalidatePath } from 'next/cache'
 import { ProductCategory } from '@constants'
 
 interface PopupModalProps {
@@ -50,6 +49,7 @@ function ProductModal({
     useState<number>(checkoutPrice)
   const [paymentStack, setPaymentStack] = useState<ICash[]>([])
   const [displaySuccess, setDisplaySuccess] = useState<boolean>(false)
+  const [displayErrorMessage, setDisplayErrorMessage] = useState<string>('')
   const [changeStack, setChangeStack] = useState<ChangeStack>({})
   const router = useRouter()
 
@@ -80,11 +80,16 @@ function ProductModal({
       const changeStack = calculateChange(
         deductedCheckoutPrice,
         cashes,
-        cashMutate
+        cashMutate,
+        setDisplayErrorMessage
       )
 
+      // handle no change
+      if (!changeStack) {
+        return
+      }
+
       // update product stock
-      console.log('product.stock: ', product.stock)
       productMutate(
         updateProductById(`${product.id}`, {
           ...product,
@@ -97,28 +102,30 @@ function ProductModal({
           product.category as ProductCategory
         )
       )
-
-      console.log('changeStack: ', changeStack)
       setLoadingPopup(false)
-
-      // TODO: throw error ?
-      if (!changeStack) {
-        setOpenPopup(false)
-        return
-      }
 
       setChangeStack(changeStack)
       setDisplaySuccess(true)
-      // display changeStack as UI with an OK button (mutation of cash option stock on the server will run along side this)
-      // after user click OK display success with another OK button
-      // after close success clear everything and redirect to catalog page
     }
 
     // case no change needed
     if (deductedCheckoutPrice === 0 && paymentStack.length > 0) {
-      // update the product stock
-      // and display success with ok button
-      // after close success clear everything and redirect to catalog page
+      // update product stock
+      productMutate(
+        updateProductById(`${product.id}`, {
+          ...product,
+          stock: product.stock - 1,
+        })
+      )
+      // revalidate the cached products in catalog page
+      mutate(
+        ProductsAPIEndpoints.FETCH_BY_CATEGORY(
+          product.category as ProductCategory
+        )
+      )
+      // display success
+      setChangeStack({})
+      setDisplaySuccess(true)
     }
     setPaymentStack([])
   }, [deductedCheckoutPrice])
@@ -127,7 +134,37 @@ function ProductModal({
     return <p>loading. . .</p>
   }
 
-  // console.log('paymentStack: ', paymentStack)
+  // Handle error
+  if (!!displayErrorMessage || error) {
+    return (
+      <dialog id="my_modal_1" className={clsx('modal', { 'modal-open': open })}>
+        <form method="dialog" className="modal-box">
+          <div className="w-full flex flex-col items-center py-10">
+            <h3 className="font-bold text-2xl">
+              {displayErrorMessage ?? 'AN ERROR HAS OCCURRED'}
+            </h3>
+
+            {/* actions */}
+            <div className="modal-action">
+              {/* if there is a button in form, it will close the modal */}
+              <button
+                className="btn"
+                onClick={() => {
+                  setOpenPopup(false)
+                  setLoadingPopup(false)
+                  setDeductedCheckoutPrice(checkoutPrice)
+                  setPaymentStack([])
+                  setDisplayErrorMessage('')
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </form>
+      </dialog>
+    )
+  }
 
   const renderLoadingState = () => {
     return (
@@ -182,8 +219,10 @@ function ProductModal({
             className="btn"
             onClick={() => {
               setOpenPopup(false)
+              setLoadingPopup(false)
               setDeductedCheckoutPrice(checkoutPrice)
               setPaymentStack([])
+              setDisplayErrorMessage('')
             }}
           >
             Cancel
@@ -217,8 +256,10 @@ function ProductModal({
                   setChangeStack({})
                 } else {
                   setOpenPopup(false)
+                  setLoadingPopup(false)
                   setDeductedCheckoutPrice(checkoutPrice)
                   setPaymentStack([])
+                  setDisplayErrorMessage('')
                   router.push('/catalog/coffee')
                 }
               }}

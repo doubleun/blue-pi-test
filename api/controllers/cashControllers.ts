@@ -22,7 +22,7 @@ export const getCashOptions = async (req: Request, res: Response) => {
 export const updateCashOptions = async (req: Request, res: Response) => {
   try {
     const updatedCashOptions: ICash[] = req.body
-    if (!updatedCashOptions || updatedCashOptions?.length < 0)
+    if (!Array.isArray(updatedCashOptions) || updatedCashOptions.length < 0)
       res.status(400).json({ message: 'payload missing' })
 
     updatedCashOptions.forEach(async (cash) => {
