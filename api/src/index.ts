@@ -7,19 +7,15 @@ import connectDB from '../config/db'
 dotenv.config()
 const port = process.env.PORT || 3003
 
-// connectDB()
+connectDB()
 
 const app: Express = express()
 
-// app.use(express.json())
-// app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
-// app.use('/api/cash', cashRoutes)
-// app.use('/api/products', productRoutes)
-
-app.get('/', (req, res) => {
-  res.send('HI')
-})
+app.use('/api/cashes', cashRoutes)
+app.use('/api/products', productRoutes)
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`)

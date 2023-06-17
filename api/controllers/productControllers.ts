@@ -5,7 +5,8 @@ import { Request, Response } from 'express'
  * @description Get all products from DB, all products stock
  */
 export const getProducts = (req: Request, res: Response) => {
-  res.send('Get all products')
+  // res.send('Get all products')
+  res.json()
 }
 
 /**

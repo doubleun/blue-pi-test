@@ -10,4 +10,4 @@ const cashSchema = new mongoose.Schema({
   amount: Number,
 })
 
-mongoose.model('Cash', cashSchema)
+export default mongoose.model('Cash', cashSchema)

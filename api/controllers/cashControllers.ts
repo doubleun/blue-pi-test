@@ -1,11 +1,19 @@
 import { Request, Response } from 'express'
+import Cash from '../model/Cash'
 
 /**
  * GET - get coins (1, 5, 10) and banknotes (20, 50, 100, 500, 1000) stocks
  * @description Get cash status - (current coins, current banknotes)
  */
-export const getCashOptions = (req: Request, res: Response) => {
-  res.send('Get cash options')
+export const getCashOptions = async (req: Request, res: Response) => {
+  try {
+    const cashes = await Cash.find()
+    res.json(cashes)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+  // res.send('Get cash options')
 }
 
 /**
