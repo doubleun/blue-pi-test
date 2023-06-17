@@ -2,7 +2,6 @@ import { ProductCategory } from '@constants'
 import { CatalogNavbar, ProductCardCatalog } from '@catalog/components'
 
 function CatalogPage({ params }: { params: { category: ProductCategory } }) {
-  console.log('params.category: ', params.category)
   return (
     <main>
       <CatalogNavbar category={params.category} />

@@ -6,7 +6,6 @@ import { ProductCategory } from '@constants'
 
 // TOOD: dynamic product display based on the incoming `id`
 async function ProductCardCatalog({ category }: { category: ProductCategory }) {
-  console.log('category: ', category)
   const products = await getProducts(category)
 
   if (!products) {

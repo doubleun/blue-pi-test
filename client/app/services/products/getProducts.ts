@@ -8,7 +8,6 @@ const getProducts = async (
   try {
     let products
     if (category) {
-      console.log('category: log: ', category)
       // fetch by category case
       products = await fetch(ProductsAPIRoutes.FETCH_BY_CATEGORY(category))
     } else {

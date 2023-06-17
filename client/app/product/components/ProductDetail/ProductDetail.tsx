@@ -4,22 +4,22 @@ import React from 'react'
 import ProductImage from './ProductImage'
 import Image from 'next/image'
 import { calculateCheckoutPrice } from './ProductDetail.helper'
+import { getProductById } from '@services/products'
 // import useSWR from 'swr'
 
 async function ProductDetail({ id }: { id: string }) {
-  // const data = useSWR('/products', getMockProducts)
-  // FIXME: remove this mock
-  const mockProduct = {}
+  // const data = useSWR('/products', getproducts)
+  const product = await getProductById(id)
 
   // TODO:maybe throw an error
-  if (!mockProduct) {
+  if (!product) {
     console.error('Product not found')
     return
   }
   return (
     <section className="container h-full relative m-auto px-2 md:px-0 py-6">
       {/* TODO: can add product navbar */}
-      <ProductImage product={mockProduct} />
+      <ProductImage product={product} />
 
       {/* product body */}
       <div className="w-full mt-8 px-6 py-4 rounded-lg bg-white">
@@ -53,7 +53,7 @@ async function ProductDetail({ id }: { id: string }) {
         <div className="prose flex">
           <h4 className="border-r-2 border-slate-900 pr-4">Buy now</h4>
           {/* TODO: remove cal addons mock */}
-          <h4 className="pl-4">{`${calculateCheckoutPrice(mockProduct, [
+          <h4 className="pl-4">{`${calculateCheckoutPrice(product, [
             15,
           ])} Baht`}</h4>
         </div>

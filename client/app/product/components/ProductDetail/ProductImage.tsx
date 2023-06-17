@@ -1,12 +1,12 @@
 import React from 'react'
 import Image from 'next/image'
+import { IProduct } from '@services'
 
-// TODO: use product type from getProducts service
-function ProductImage({ product }: any) {
+function ProductImage({ product }: { product: IProduct }) {
   return (
     <section className="m-auto flex flex-col gap-4 items-center text-center prose">
       <Image
-        src={product.src}
+        src={product.imageSrc}
         alt={product.name}
         width={250}
         height={250}

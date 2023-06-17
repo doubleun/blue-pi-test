@@ -40,17 +40,25 @@ export const getProductsByCategory = async (req: Request, res: Response) => {
 }
 
 /**
- * GET - product
- * @description Get one product, get product stock
+ * GET - product by id
+ * @description Get one product by id
  */
-export const getProduct = (req: Request, res: Response) => {
-  res.send('Get a product')
+export const getProductById = async (req: Request, res: Response) => {
+  const { id } = req.params
+  try {
+    const product = await Product.find({ id })
+    res.json(product)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+  // res.send('Get a product')
 }
 
 /**
  * PUT - product
- * @description Update a product in DB, update product stock
+ * @description Update a product by id
  */
-export const updateProduct = (req: Request, res: Response) => {
+export const updateProductById = (req: Request, res: Response) => {
   res.send('Update product')
 }
