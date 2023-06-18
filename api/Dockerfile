@@ -7,7 +7,7 @@ EXPOSE 3003
 # Install pnpm globally
 RUN npm install -g pnpm typescript
 
-COPY ./.deploy ./
+COPY . .
 
 # Install all dependencies using pnpm
 RUN pnpm install
