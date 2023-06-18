@@ -10,10 +10,8 @@ import { useRouter } from 'next/navigation'
 import ProductModal from '../ProductModal/ProductModal'
 
 function ProductDetail({ id }: { id: string }) {
-  // TODO: turn this into a hook
   const {
     isLoading,
-    error,
     data: product,
     mutate: productMutate,
   } = useSWR([ProductsAPIEndpoints.FETCH_ONE_BY_ID(id), id], ([_url, id]) => {
@@ -32,23 +30,17 @@ function ProductDetail({ id }: { id: string }) {
   useEffect(() => {
     if (product) {
       // consider using `useTransition` to potentially reduce the re-render
-      // handle checkout ad
       setCheckoutPrice(
         calculateAddonPrice(product.price, 'add', Object.values(additional))
       )
     }
   }, [additional, product])
 
-  // TODO: make a proper loading component
-  if (isLoading) {
+  // NOTE: Could make a better loading component
+  if (isLoading || !product) {
     return <h2>Loading . . .</h2>
   }
 
-  // TODO:maybe throw an error
-  if (!product || error) {
-    console.error('An error has occurred while trying to fetch the product')
-    return
-  }
   return (
     <section
       className="container h-full relative m-auto px-2 md:px-0 py-6"
@@ -64,7 +56,6 @@ function ProductDetail({ id }: { id: string }) {
         productMutate={productMutate}
       />
 
-      {/* TODO: can add product navbar ? */}
       <ProductImage product={product} />
 
       {/* product body */}
@@ -160,9 +151,7 @@ function ProductDetail({ id }: { id: string }) {
       <button
         className="btn btn-primary absolute bottom-6 right-0 mx-2 md:mx-0"
         onClick={() => {
-          // handle buy logic
           setOpenPopup(true)
-          // setLoadingPopup(true)
         }}
         data-test-id={`product-detail-buy-btn`}
       >

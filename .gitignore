@@ -1,9 +1,9 @@
 node_modules/
-*/node_modules/
-*/.env
-*/.deploy
-*/.next
-*/coverage/
-*/.swc/
+*node_modules/
+*.env
+*.deploy
+*.next
+*coverage/
+*.swc/
 
 client/.next/

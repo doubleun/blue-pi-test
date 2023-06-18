@@ -6,7 +6,6 @@ import { cn } from '@/utilities'
 function ProductCard({ product }: { product: IProduct }) {
   if (!product) return
   return (
-    // shadow-xl ??
     <section
       className={cn(
         'card w-64 xl:w-full bg-base-100 group hover:bg-transparent/5 mx-auto',
@@ -67,7 +66,7 @@ function ProductCard({ product }: { product: IProduct }) {
           className="card-footer"
           data-test-id={`product-card-footer-container-${product.id}`}
         >
-          <p data-test-id={`product-card-footer-${product.id}`}>
+          <p data-test-id={`product-card-footer-price-${product.id}`}>
             {product.price} Baht
           </p>
         </div>

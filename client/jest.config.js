@@ -9,13 +9,15 @@ const customJestConfig = {
   coverageProvider: 'v8',
   collectCoverageFrom: [
     '**/*.{js,jsx,ts,tsx}',
+    '!**/*{layout,page}.tsx', // not testing layout or page
+    '!**/*.exports.{ts,tsx}', // ignore barrel exports file
     '!**/*.d.ts',
     '!**/node_modules/**',
     '!<rootDir>/out/**',
     '!<rootDir>/.next/**',
     '!<rootDir>/*.config.js',
     '!<rootDir>/coverage/**',
-    '!**/*{layout,page}.tsx', // not testing layout or page
+    '!<rootDir>/app/services/**',
   ],
   moduleNameMapper: {
     // Handle CSS imports (with CSS modules)
@@ -33,7 +35,7 @@ const customJestConfig = {
     '^@/(.*)$': '<rootDir>/app/$1',
   },
   // Add more setup options before each test is run
-  // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
   testEnvironment: 'jsdom',
   transform: {
