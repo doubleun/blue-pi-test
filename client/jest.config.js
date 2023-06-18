@@ -10,7 +10,7 @@ const customJestConfig = {
   collectCoverageFrom: [
     '**/*.{js,jsx,ts,tsx}',
     '!**/*{layout,page}.tsx', // not testing layout or page
-    '!**/*.exports.{ts,tsx}', // ignore barrel exports file
+    '!**/*/components/index.{ts,tsx}', // ignore barrel exports files
     '!**/*.d.ts',
     '!**/node_modules/**',
     '!<rootDir>/out/**',

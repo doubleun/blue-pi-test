@@ -38,7 +38,7 @@ function ProductDetail({ id }: { id: string }) {
 
   // NOTE: Could make a better loading component
   if (isLoading || !product) {
-    return <h2>Loading . . .</h2>
+    return <h2 data-test-id="product-detail-loading">Loading . . .</h2>
   }
 
   return (

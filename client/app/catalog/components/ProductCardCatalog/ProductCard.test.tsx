@@ -4,20 +4,24 @@ import ProductCard from './ProductCard'
 import { mockProducts } from '@/__mocks__'
 
 describe('ProductCard', () => {
-  const mockProduct = mockProducts.find((itm) => itm.id === 1) // espresso
-  if (!mockProduct) throw new Error('Mock product id of 1 is undefined')
+  const mockProduct = mockProducts[0] // espresso
+  if (!mockProduct) throw new Error('First mock product is undefined')
 
   describe('render product card', () => {
-    it('should render product id 1 correctly', () => {
+    it('should render the first product correctly', () => {
       render(<ProductCard product={mockProduct} />)
-      expect(screen.getByTestId('product-card-container-1')).toBeInTheDocument()
+      expect(
+        screen.getByTestId(`product-card-container-${mockProduct.id}`)
+      ).toBeInTheDocument()
 
       expect(
-        screen.getByTestId('product-card-footer-price-1').innerHTML
+        screen.getByTestId(`product-card-footer-price-${mockProduct.id}`)
+          .innerHTML
       ).toContain(`${mockProduct.price}`)
 
       expect(
-        screen.getByTestId('product-card-badges-container-1').childElementCount
+        screen.getByTestId(`product-card-badges-container-${mockProduct.id}`)
+          .childElementCount
       ).toEqual(mockProduct.highlights.length)
     })
 
@@ -26,7 +30,7 @@ describe('ProductCard', () => {
 
       render(<ProductCard product={mockProduct} />)
       expect(
-        screen.getByTestId('product-card-container-1').classList
+        screen.getByTestId(`product-card-container-${mockProduct.id}`).classList
       ).toContain('cursor-not-allowed')
     })
   })

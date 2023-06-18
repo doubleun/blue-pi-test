@@ -1,8 +1,5 @@
 import { ProductCategory } from '@/constants'
-import {
-  CatalogNavbar,
-  ProductCardCatalog,
-} from '@/catalog/components/index.exports'
+import { CatalogNavbar, ProductCardCatalog } from '@/catalog/components'
 
 function CatalogPage({ params }: { params: { category: ProductCategory } }) {
   return (

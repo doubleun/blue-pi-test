@@ -17,7 +17,7 @@ function ProductCardCatalog({ category }: { category: ProductCategory }) {
   )
 
   if (isLoading || !products) {
-    return <h1 data-test-id="product-card-catalog-loading">Loading . .. </h1>
+    return <h1 data-test-id="product-card-catalog-loading">Loading . . . </h1>
   }
 
   return (

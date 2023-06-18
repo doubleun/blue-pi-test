@@ -10,9 +10,6 @@ function ChangeDetail({ changeStack }: { changeStack: ChangeStack }) {
     (a, b) => a.value - b.value
   )
 
-  // TODO: throw error
-  if (changeStackValues.length < 1) return
-
   return (
     <div className="w-full mt-4" data-test-id="change-detail-container">
       {changeStackValues.map((change) => (
@@ -21,10 +18,16 @@ function ChangeDetail({ changeStack }: { changeStack: ChangeStack }) {
           className="grid grid-cols-2 justify-center items-center"
           data-test-id={`change-detail-${change.value}-container`}
         >
-          <h3 className="font-semibold text-base md:text-lg text-center">
+          <h3
+            className="font-semibold text-base md:text-lg text-center"
+            data-test-id={`change-detail-${change.value}-amount`}
+          >
             {change.amount} * {change.value} THB
           </h3>
-          <h3 className="font-semibold text-base md:text-lg text-center">
+          <h3
+            className="font-semibold text-base md:text-lg text-center"
+            data-test-id={`change-detail-${change.value}-type`}
+          >
             {change.type}
           </h3>
         </div>

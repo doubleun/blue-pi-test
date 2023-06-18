@@ -1,4 +1,16 @@
+import {
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from '@testing-library/react'
+import '@testing-library/jest-dom'
+import { mockProducts } from '@/__mocks__'
+import { setupServer } from 'msw/node'
+import { rest } from 'msw'
+import { ProductsAPIEndpoints } from '@/services'
+import { ProductCategory } from '@/constants'
 import { calculateAddonPrice } from './ProductDetail.helper'
+import ProductDetail from './ProductDetail'
 
 describe('ProductDetail', () => {
   describe('calculateAddonPrice', () => {
@@ -46,4 +58,58 @@ describe('ProductDetail', () => {
       })
     })
   })
+
+  // Having problem with `useRouter`
+  // describe('render product detail', () => {
+  //   const mockProductId = '1' // espresso
+
+  //   const server = setupServer(
+  //     // Mock server for GET coffee products
+  //     rest.get(
+  //       ProductsAPIEndpoints.FETCH_ONE_BY_ID(mockProductId).replace(
+  //         mockProductId,
+  //         ':id'
+  //       ),
+  //       (req, res, ctx) => {
+  //         const mockEspressoProduct = mockProducts.filter(
+  //           (mockItem) => `${mockItem.id}` === req.params.id
+  //         )
+  //         return res(ctx.delay(50), ctx.json(mockEspressoProduct))
+  //       }
+  //     )
+  //   )
+
+  //   beforeAll(() => server.listen())
+  //   afterAll(() => server.close())
+  //   afterEach(() => server.resetHandlers())
+
+  //   beforeEach(async () => {
+  //     render(<ProductDetail id={mockProductId} />)
+
+  //     await waitForElementToBeRemoved(() =>
+  //       screen.getByTestId('product-detail-loading')
+  //     )
+  //   })
+
+  //   it('should render correctly', () => {
+  //     expect(
+  //       screen.getByTestId(`product-detail-container-${mockProductId}`)
+  //     ).toBeInTheDocument()
+  //     expect(
+  //       screen.getByTestId(`product-detail-body-${mockProductId}`)
+  //     ).toBeInTheDocument()
+  //   })
+
+  //   it('should render the additional section correctly', () => {
+  //     expect(
+  //       screen.getByTestId(`product-detail-add-coffee-checkbox`)
+  //     ).toBeInTheDocument()
+
+  //     screen.getByTestId(`product-detail-add-coffee-checkbox`).click()
+
+  //     expect(
+  //       screen.getByTestId(`product-detail-add-coffee-checkbox`)
+  //     ).toBeChecked()
+  //   })
+  // })
 })

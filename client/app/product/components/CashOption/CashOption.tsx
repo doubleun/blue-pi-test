@@ -1,7 +1,10 @@
-import { ICash } from '@services/cashes'
+import { ICash } from '@/services/cashes'
 import Image from 'next/image'
 import React from 'react'
 
+/**
+ * @param callback - for pushing new input cash option from user and re-render the deducted checkout price
+ */
 function CashOption({
   cashOption,
   callback,

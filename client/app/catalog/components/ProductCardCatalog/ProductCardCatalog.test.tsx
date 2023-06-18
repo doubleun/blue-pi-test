@@ -1,28 +1,53 @@
-import { render, screen } from '@testing-library/react'
+import {
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { mockProducts } from '@/__mocks__'
+import { setupServer } from 'msw/node'
+import { rest } from 'msw'
+import { ProductsAPIEndpoints } from '@/services'
+import { ProductCategory } from '@/constants'
+import ProductCardCatalog from './ProductCardCatalog'
+
+const server = setupServer(
+  // Mock server for GET coffee products
+  rest.get(
+    ProductsAPIEndpoints.FETCH_BY_CATEGORY(ProductCategory.COFFEE).replace(
+      ProductCategory.COFFEE,
+      ':category'
+    ),
+    (req, res, ctx) => {
+      const mockCoffeeProducts = mockProducts.filter(
+        (mockItem) => mockItem.category === req.params.category
+      )
+      return res(ctx.delay(50), ctx.json(mockCoffeeProducts))
+    }
+  )
+)
+
+beforeAll(() => server.listen())
+afterAll(() => server.close())
+afterEach(() => server.resetHandlers())
 
 describe('ProductCardCatalog', () => {
-  expect(true).toBe(true)
-  // const mockProduct = mockProducts.find((itm) => itm.id === 1) // espresso
-  // if (!mockProduct) throw new Error('Mock product id of 1 is undefined')
-  // describe('render product card', () => {
-  //   it('should render product id 1 correctly', () => {
-  //     render(<ProductCard product={mockProduct} />)
-  //     expect(screen.getByTestId('product-card-container-1')).toBeInTheDocument()
-  //     expect(
-  //       screen.getByTestId('product-card-footer-price-1').innerHTML
-  //     ).toContain(`${mockProduct.price}`)
-  //     expect(
-  //       screen.getByTestId('product-card-badges-container-1').childElementCount
-  //     ).toEqual(mockProduct.highlights.length)
-  //   })
-  //   it('should display with cursor not allowed if out of stock', () => {
-  //     mockProduct.stock = 0
-  //     render(<ProductCard product={mockProduct} />)
-  //     expect(
-  //       screen.getByTestId('product-card-container-1').classList
-  //     ).toContain('cursor-not-allowed')
-  //   })
-  // })
+  describe('product catalog in coffee category', () => {
+    const mockCoffeeProducts = mockProducts.filter(
+      (mockItem) => mockItem.category === ProductCategory.COFFEE
+    )
+    beforeEach(async () => {
+      render(<ProductCardCatalog category={ProductCategory.COFFEE} />)
+
+      await waitForElementToBeRemoved(() =>
+        screen.getByTestId('product-card-catalog-loading')
+      )
+    })
+
+    it('should render all products in the category correctly', () => {
+      expect(
+        screen.getByTestId('product-card-catalog-container').childElementCount
+      ).toEqual(mockCoffeeProducts.length)
+    })
+  })
 })
