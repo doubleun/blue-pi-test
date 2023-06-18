@@ -15,6 +15,7 @@ const customJestConfig = {
     '!<rootDir>/.next/**',
     '!<rootDir>/*.config.js',
     '!<rootDir>/coverage/**',
+    '!**/*{layout,page}.tsx', // not testing layout or page
   ],
   moduleNameMapper: {
     // Handle CSS imports (with CSS modules)

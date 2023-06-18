@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
-import { IProduct } from '@services'
-import { cn } from '@utilities'
+import { IProduct } from '@/services'
+import { cn } from '@/utilities'
 
 function ProductCard({ product }: { product: IProduct }) {
   if (!product) return

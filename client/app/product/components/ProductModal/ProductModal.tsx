@@ -5,8 +5,8 @@ import {
   IProduct,
   ProductsAPIEndpoints,
   updateProductById,
-} from '@services'
-import { ICash, getCashes } from '@services/cashes'
+} from '@/services'
+import { ICash, getCashes } from '@/services/cashes'
 import clsx from 'clsx'
 import React, { Dispatch, useCallback, useEffect, useState } from 'react'
 import useSWR, { KeyedMutator, mutate } from 'swr'
@@ -15,7 +15,7 @@ import { calculateAddonPrice } from '../ProductDetail/ProductDetail.helper'
 import { calculateChange } from './ProductModal.helper'
 import { useRouter } from 'next/navigation'
 import ChangeDetail, { ChangeStack } from './ChangeDetail'
-import { ProductCategory } from '@constants'
+import { ProductCategory } from '@/constants'
 
 interface PopupModalProps {
   open: boolean

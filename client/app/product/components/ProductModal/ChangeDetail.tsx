@@ -1,4 +1,4 @@
-import { ICash } from '@services/cashes'
+import { ICash } from '@/services/cashes'
 import React from 'react'
 
 export type ChangeStack = {

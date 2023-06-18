@@ -1,6 +1,5 @@
-import { ProductsAPIEndpoints, apiBaseUrl, request } from '@services/config'
+import { ProductsAPIEndpoints, request } from '@/services/config'
 import { IProduct } from './products'
-import { ProductCategory } from '@constants'
 
 const getProductById = async (id?: string): Promise<IProduct | undefined> => {
   try {

@@ -1,4 +1,4 @@
-import { CashesAPIEndpoints, request } from '@services/config'
+import { CashesAPIEndpoints, request } from '@/services/config'
 import { ICash } from './cashes'
 
 const updateCashes = async (

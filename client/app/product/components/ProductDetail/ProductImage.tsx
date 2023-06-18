@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { IProduct } from '@services'
+import { IProduct } from '@/services'
 
 function ProductImage({ product }: { product: IProduct }) {
   return (

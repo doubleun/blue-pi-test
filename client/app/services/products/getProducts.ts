@@ -1,6 +1,6 @@
-import { ProductsAPIEndpoints, request } from '@services/config'
+import { ProductsAPIEndpoints, request } from '@/services/config'
 import { IProduct } from './products'
-import { ProductCategory } from '@constants'
+import { ProductCategory } from '@/constants'
 
 const getProducts = async (
   category?: ProductCategory

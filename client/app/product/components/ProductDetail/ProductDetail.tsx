@@ -5,7 +5,7 @@ import ProductImage from './ProductImage'
 import Image from 'next/image'
 import { calculateAddonPrice } from './ProductDetail.helper'
 import useSWR from 'swr'
-import { ProductsAPIEndpoints, getProductById } from '@services'
+import { ProductsAPIEndpoints, getProductById } from '@/services'
 import { useRouter } from 'next/navigation'
 import ProductModal from '../ProductModal/ProductModal'
 

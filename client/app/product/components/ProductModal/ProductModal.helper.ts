@@ -1,5 +1,5 @@
-import { ICash } from '@services/cashes'
-import updateCashes from '@services/cashes/updateCashes'
+import { ICash } from '@/services/cashes'
+import updateCashes from '@/services/cashes/updateCashes'
 import { KeyedMutator } from 'swr'
 import { ChangeStack } from './ChangeDetail'
 import { Dispatch } from 'react'

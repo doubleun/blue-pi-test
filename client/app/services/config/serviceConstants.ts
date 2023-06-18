@@ -1,4 +1,4 @@
-import { ProductCategory } from '@constants'
+import { ProductCategory } from '@/constants'
 
 export const ProductsAPIEndpoints = {
   FETCH_ALL: () => `/api/products`,

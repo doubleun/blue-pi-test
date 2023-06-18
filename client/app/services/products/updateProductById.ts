@@ -1,4 +1,4 @@
-import { ProductsAPIEndpoints, request } from '@services/config'
+import { ProductsAPIEndpoints, request } from '@/services/config'
 import { IProduct } from './products'
 
 const updateProductById = async (

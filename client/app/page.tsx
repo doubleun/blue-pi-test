@@ -1,4 +1,4 @@
-import { ProductCategory } from '@constants'
+import { ProductCategory } from '@/constants'
 import Link from 'next/link'
 
 export default function Home() {

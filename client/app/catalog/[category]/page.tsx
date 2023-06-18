@@ -1,5 +1,5 @@
-import { ProductCategory } from '@constants'
-import { CatalogNavbar, ProductCardCatalog } from '@catalog/components'
+import { ProductCategory } from '@/constants'
+import { CatalogNavbar, ProductCardCatalog } from '@/catalog/components'
 
 function CatalogPage({ params }: { params: { category: ProductCategory } }) {
   return (

@@ -1,11 +1,11 @@
 'use client'
 
-import getProducts from '@services/products/getProducts'
+import getProducts from '@/services/products/getProducts'
 import React from 'react'
 import ProductCard from './ProductCard'
 import Link from 'next/link'
-import { ProductCategory } from '@constants'
-import { ProductsAPIEndpoints } from '@services'
+import { ProductCategory } from '@/constants'
+import { ProductsAPIEndpoints } from '@/services'
 import useSWR from 'swr'
 
 // TOOD: dynamic product display based on the incoming `id`

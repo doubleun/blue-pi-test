@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { ProductCategory } from '@constants'
+import { ProductCategory } from '@/constants'
 import clsx from 'clsx'
 
 /**
@@ -8,7 +8,7 @@ import clsx from 'clsx'
  * @param id - value of the ProductCategory enum. For setting active in the UI
  * @todo move to helper file if more logic is needed
  */
-const mapMenuItems = (category: ProductCategory) => {
+export const mapMenuItems = (category: ProductCategory) => {
   return Object.values<string>(ProductCategory).map((option) => (
     <li key={option} data-test-id="catalog-navbar-list-parent">
       <Link

@@ -22,17 +22,26 @@ describe('calculateAddonPrice', () => {
       )
       expect(priceAddCoffeeShot).toEqual(135)
     })
+
+    it('should return the same price if not operation is not provided', () => {
+      const calPrice = calculateAddonPrice(
+        productPrice,
+        '' as any,
+        Object.values(additional)
+      )
+      expect(calPrice).toEqual(productPrice)
+    })
   })
 
   describe('calculate deduction', () => {
     it('should deduct correctly', () => {
       const deductions = [10, 5, 20, 20] // 55
-      const priceAddCoffeeShot = calculateAddonPrice(
+      const priceDeducted = calculateAddonPrice(
         productPrice,
         'deduct',
         Object.values(deductions)
       )
-      expect(priceAddCoffeeShot).toEqual(60)
+      expect(priceDeducted).toEqual(60)
     })
   })
 })

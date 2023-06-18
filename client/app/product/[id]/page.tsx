@@ -1,4 +1,4 @@
-import { ProductDetail } from '@product/components'
+import { ProductDetail } from '@/product/components'
 import React from 'react'
 
 // TODO: can check if the id is actually from ProductCategory if needed
