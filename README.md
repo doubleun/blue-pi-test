@@ -56,3 +56,8 @@ In `api` workspace setup the `.env` for `MONGO_URI` If you want to run locally v
 ### RUN JEST
 
 1. run `pnpm test:client:coverage`
+
+## Screenshots
+<img width="1469" alt="image" src="https://github.com/doubleun/blue-pi-test/assets/84143891/b9af362d-1700-4983-9c72-fb13f7ae4cc7">
+<img width="623" alt="image" src="https://github.com/doubleun/blue-pi-test/assets/84143891/db05f7ba-ab0b-4e33-a96f-0f212070361f">
+
