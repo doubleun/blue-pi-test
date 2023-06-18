@@ -1,7 +1,6 @@
 ## RUN EVERTHING WITH DOCKER COMPOSE
 
 1. Install `pnpm`
-2. run `pnpm install --recursive`
 3. run `docker-compose up -d` at the root of the project
 4. Checkout the [Web at localhost:3000](http://localhost:3000) and the api server running [at localhost:3003](http://localhost:3003)
 5. If you want to connect to the mongodb see the **setup mongodb** part down below
