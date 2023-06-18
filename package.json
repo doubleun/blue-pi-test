@@ -6,10 +6,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"pnpm -F api dev\" \"pnpm -F client dev\"",
+    "dev": "pnpm -F api build && concurrently \"pnpm -F api dev\" \"pnpm -F client dev\"",
     "dev:api": "pnpm -F api dev",
     "dev:client": "pnpm -F client dev",
-    "start": "concurrently \"pnpm -F api start\" \"pnpm -F client start\"",
+    "start": "pnpm -F api build && concurrently \"pnpm -F api start\" \"pnpm -F client start\"",
     "test:client": "pnpm -F client test",
     "test:client:coverage": "pnpm -F client test:coverage"
   },
