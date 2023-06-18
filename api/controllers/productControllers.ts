@@ -75,7 +75,6 @@ export const updateProductById = async (req: Request, res: Response) => {
 
   try {
     const _updated = await Product.updateOne({ id }, product)
-    console.log(product)
     res.json(product)
   } catch (err) {
     console.error(err)

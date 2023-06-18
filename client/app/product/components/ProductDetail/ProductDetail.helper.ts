@@ -1,8 +1,6 @@
-import { IProduct } from '@services'
-
 export const calculateAddonPrice = (
   initialPrice: number,
-  operation: 'add' | 'deduct' | 'reset',
+  operation: 'add' | 'deduct',
   addons: number[]
 ) => {
   let finalPrice = initialPrice

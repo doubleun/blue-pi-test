@@ -39,10 +39,6 @@ function ProductDetail({ id }: { id: string }) {
     }
   }, [additional, product])
 
-  useEffect(() => {
-    console.log('render')
-  })
-
   // TODO: make a proper loading component
   if (isLoading) {
     return <h2>Loading . . .</h2>
